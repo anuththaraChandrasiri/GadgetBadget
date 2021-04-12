@@ -13,7 +13,7 @@ public class Payment {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String hello()
 	{
-	return "Hello world.";
+	return "Hello payment service.";
 	}
 
 }
