@@ -37,7 +37,7 @@ public class Research {
 					return "Error while connecting to the database for inserting.";
 				}
 				
-	 // create a prepared statement
+			// create a prepared statement
 			String query = " insert into project values (NULL,?,?,?)";
 			String query2 = " insert into finished values (LAST_INSERT_ID(),?,NULL,NULL,?)";
 
@@ -55,6 +55,52 @@ public class Research {
 			 preparedStmt2.setFloat(2, Float.parseFloat(price));
 
 	
+			 preparedStmt.execute();
+			 preparedStmt2.execute();
+
+			 con.close();
+			 
+			 output = "Inserted successfully";
+			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while inserting the reasearch.";
+				 System.err.println(e.getMessage());
+			 }
+			 return output;
+	 }
+	
+	public String insertUnfinishedResearch(String researcherID, String topic, String status, String amount)
+	{
+		String output = "";
+		
+		try
+		{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for inserting.";
+				}
+				
+			// create a prepared statement
+			String query = " insert into project values (NULL,?,?,?)";
+			String query2 = " insert into unfinished values (LAST_INSERT_ID(),?,NULL,?)";
+
+	 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 PreparedStatement preparedStmt2 = con.prepareStatement(query2);
+
+			 // binding values
+			 preparedStmt.setInt(1, Integer.parseInt(researcherID));
+			 preparedStmt.setString(2, topic);
+			 preparedStmt.setString(3, status);
+			 
+			 preparedStmt2.setInt(1, Integer.parseInt(researcherID));
+			 preparedStmt2.setFloat(2, Float.parseFloat(amount));
+			// execute the statement
+			
+
 			 preparedStmt.execute();
 			 preparedStmt2.execute();
 
