@@ -115,4 +115,43 @@ public class Research {
 			 }
 			 return output;
 	 }
+	
+	public String deleteReasearch(String projectID)
+	{
+		String output = "";
+		
+		try
+		{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for inserting.";
+				}
+				
+			// create a prepared statement
+			String query = "delete from project where pid = ?";
+
+	 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			 // binding values
+			 preparedStmt.setInt(1, Integer.parseInt(projectID));
+			
+			// execute the statement
+			
+
+			 preparedStmt.execute();
+
+			 con.close();
+			 
+			 output = "Deleted successfully";
+			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while inserting the reasearch.";
+				 System.err.println(e.getMessage());
+			 }
+			 return output;
+	 }
 }

@@ -3,6 +3,10 @@ package com;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -33,18 +37,31 @@ public class Research_service {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertUnfinishedProject(String reasearchData) {
 		
-		 JsonObject itemObject = new JsonParser().parse(reasearchData).getAsJsonObject();
+		 JsonObject researchObject = new JsonParser().parse(reasearchData).getAsJsonObject();
 		 
-		 String researcherID = itemObject.get("researcherID").getAsString();
-		 String topic = itemObject.get("topic").getAsString();
-		 String status = itemObject.get("status").getAsString();
-		 String amount = itemObject.get("amount").getAsString();
+		 String researcherID = researchObject.get("researcherID").getAsString();
+		 String topic = researchObject.get("topic").getAsString();
+		 String status = researchObject.get("status").getAsString();
+		 String amount = researchObject.get("amount").getAsString();
 		 
 		 String output = researchObj.insertUnfinishedResearch(researcherID, topic, status, amount);
 		 return output;
 
-
 		
+	}
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteResearach(String projectID)
+	{
+		 JsonObject researchObject = new JsonParser().parse(projectID).getAsJsonObject();
+
+	//Read the value from the element <itemID>
+		 String projectCode = researchObject.get("projectCode").getAsString();
+	 String output = researchObj.deleteReasearch(projectCode);
+	return output;
 	}
 	
 
