@@ -12,7 +12,7 @@ import com.google.gson.JsonParser;
 
 import model.Research;
 
-@Path("/Reasearch")
+@Path("/Research")
 public class Research_service {
 	
 	Research researchObj = new Research();
@@ -51,7 +51,7 @@ public class Research_service {
 	}
 	
 	@DELETE
-	@Path("/delete research")
+	@Path("/deleteResearch")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteResearach(String projectID)
@@ -65,7 +65,7 @@ public class Research_service {
 	}
 	
 	@PUT
-	@Path("/update")
+	@Path("/updateFinished")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updateFinishedResearch(String projectDetails)
@@ -82,6 +82,27 @@ public class Research_service {
 		
 		 
 		 String output = researchObj.updateFinishedResearch(projectID , topic, amount , researcherID);
+		 return output;
+	}
+	
+	@PUT
+	@Path("/updateUnfinished")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateUninishedResearch(String projectDetails)
+	{
+		 Document researchObject = Jsoup.parse(projectDetails, "", Parser.xmlParser());
+
+		 
+		 String projectID = researchObject.select("projectID").text();
+		 String topic = researchObject.select("topic").text();
+		 String amount = researchObject.select("amount").text();
+		 String researcherID = researchObject.select("researcherID").text();
+
+		 
+		
+		 
+		 String output = researchObj.updateUnfinishedResearch(projectID , topic, amount , researcherID);
 		 return output;
 	}
 	
