@@ -154,4 +154,49 @@ public class Research {
 			 }
 			 return output;
 	 }
+	
+	public String updateFinishedResearch(String projectID , String topic, String amount , String researcherID)
+	{
+		String output = "";
+		
+		try
+		{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for inserting.";
+				}
+				
+			// create a prepared statement
+			String query = "update project set topic = ? where pid = ? and researcherID = ?";
+
+	 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			 // binding values
+			 preparedStmt.setString(1, topic);
+			 preparedStmt.setInt(2, Integer.parseInt(projectID));
+			 preparedStmt.setInt(3, Integer.parseInt(researcherID));
+
+			 
+			
+			// execute the statement
+			
+
+			 preparedStmt.execute();
+
+			 con.close();
+			 
+			 output = "Updated  successfully";
+			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while inserting the reasearch.";
+				 System.err.println(e.getMessage());
+			 }
+			 return output;
+	 }
+	
+	
 }

@@ -51,7 +51,7 @@ public class Research_service {
 	}
 	
 	@DELETE
-	@Path("/")
+	@Path("/delete research")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteResearach(String projectID)
@@ -63,6 +63,29 @@ public class Research_service {
 	 String output = researchObj.deleteReasearch(projectCode);
 	return output;
 	}
+	
+	@PUT
+	@Path("/update")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateFinishedResearch(String projectDetails)
+	{
+		 Document researchObject = Jsoup.parse(projectDetails, "", Parser.xmlParser());
+
+		 
+		 String projectID = researchObject.select("projectID").text();
+		 String topic = researchObject.select("topic").text();
+		 String amount = researchObject.select("amount").text();
+		 String researcherID = researchObject.select("researcherID").text();
+
+		 
+		
+		 
+		 String output = researchObj.updateFinishedResearch(projectID , topic, amount , researcherID);
+		 return output;
+	}
+	
+	
 	
 
 }
