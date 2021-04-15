@@ -106,6 +106,32 @@ public class Research_service {
 		 return output;
 	}
 	
+	@GET
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String readFinishedResearches( String details)
+	 {
+		 Document researchObject = Jsoup.parse(details, "", Parser.xmlParser());
+		 
+		 String researcherID = researchObject.select("researcherID").text();
+
+		 return researchObj.readFinishedResearches(researcherID); 
+	 } 
+	
+	@GET
+	@Path("/unfinished")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String readUnfinishedResearches( String details)
+	 {
+		 Document researchObject = Jsoup.parse(details, "", Parser.xmlParser());
+		 
+		 String researcherID = researchObject.select("researcherID").text();
+
+		 return researchObj.readUnfinishedResearches(researcherID); 
+	 } 
+	
 	
 	
 

@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Research {
 	
@@ -244,6 +245,146 @@ public class Research {
 			 catch (Exception e)
 			 {
 				 output = "Error while inserting the reasearch.";
+				 System.err.println(e.getMessage());
+			 }
+			 return output;
+	 }
+	
+	public String readFinishedResearches(String researcherID)
+	{
+		String  output = "<table border='1'><tr><th>ProjectID</th><th>Project Name</th>" +
+				 "<th>Project Price</th>" +
+				 "<th> Status</th>" +
+				 "<th> Client</th>" +
+				 "<th> Payment Status</th>" +
+				 "<th>Update</th><th>Remove</th></tr>";
+		
+		try
+		{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for inserting.";
+				}
+				
+			// create a prepared statement
+			String query = "Select * from finished f , project p where p.pid = f.pid  and p.researcherid = ?";
+	 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 preparedStmt.setString(1, researcherID);
+
+			 ResultSet rs = preparedStmt.executeQuery();
+			 
+			 while(rs.next()) {
+				 String projectid = rs.getString("pid");
+				 String name = rs.getString("topic");
+				 String client = rs.getString("clientid");
+				 String status = rs.getString("status");
+				 String price = rs.getString("price");
+				 
+				 output += "<tr><td>" + projectid + "</td>";
+				 output += "<td>" + name + "</td>";
+				 output += "<td>" + price + "</td>";
+				 
+				 if(client == null) {
+					 output += "<td> Not Sold</td>";
+				 	 output += "<td> None </td>";
+				 }
+
+				 else {
+					 output += "<td> Sold </td>";
+				 	 output += "<td>"+client+"</td>";
+				 }
+				 
+				 output += "<td>" + status + "</td>";
+				 
+				 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
+						 + "<td><form method='post' action='items.jsp'>"
+						 + "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
+						 + "<input name='itemID' type='hidden' value='" + projectid
+						 + "'>" + "</form></td></tr>";
+			 
+			 }
+			 con.close();
+			 output += "</table>";
+
+			 			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while reading the reasearches.";
+				 System.err.println(e.getMessage());
+			 }
+			 return output;
+	 }
+	
+	public String readUnfinishedResearches(String researcherID)
+	{
+		String  output = "<table border='1'><tr><th>ProjectID</th><th>Project Name</th>" +
+				 "<th>Funds Required</th>" +
+				 "<th> Status</th>" +
+				 "<th> Client</th>" +
+				 "<th> Fund Status</th>" +
+				 "<th>Update</th><th>Remove</th></tr>";
+		
+		try
+		{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for inserting.";
+				}
+				
+			// create a prepared statement
+			String query = "Select * from unfinished f , project p where p.pid = f.pid  and p.researcherid = ?";
+	 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 preparedStmt.setString(1, researcherID);
+
+			 ResultSet rs = preparedStmt.executeQuery();
+			 
+			 while(rs.next()) {
+				 String projectid = rs.getString("pid");
+				 String name = rs.getString("topic");
+				 String client = rs.getString("clientid");
+				 String status = rs.getString("status");
+				 String price = rs.getString("requiredAmount");
+				 
+				 output += "<tr><td>" + projectid + "</td>";
+				 output += "<td>" + name + "</td>";
+				 output += "<td>" + price + "</td>";
+				 
+				 if(client == null) {
+					 output += "<td> Not Funded</td>";
+				 	 output += "<td> None </td>";
+				 }
+
+				 else {
+					 output += "<td> Funded </td>";
+				 	 output += "<td>"+client+"</td>";
+				 }
+				 
+				 if(status.equalsIgnoreCase("Paid"))
+				 	output += "<td>Received</td>";
+				 else 
+					output += "<td>Not Received</td>";
+
+				 
+				 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
+						 + "<td><form method='post' action='items.jsp'>"
+						 + "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
+						 + "<input name='itemID' type='hidden' value='" + projectid
+						 + "'>" + "</form></td></tr>";
+			 
+			 }
+			 con.close();
+			 output += "</table>";
+
+			 			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while reading the reasearches.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
