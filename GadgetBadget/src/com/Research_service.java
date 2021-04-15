@@ -17,8 +17,9 @@ public class Research_service {
 	
 	Research researchObj = new Research();
 	
+	//Adding a new finished research to the system using a form for a specific user
 	@POST
-	@Path("/add new research")
+	@Path("/add finishedResearch")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertFinishedResearch(@FormParam("reasearcherID") String reasearcherID,
@@ -30,9 +31,11 @@ public class Research_service {
 	 String output = researchObj.insertFinishedResearch(reasearcherID, topic, status, price);
 	 return output;
 	}
+//=======================================================================================================================================
 	
+	//Adding a new unfinished research which requires funds to the system using a json object for a specific user
 	@POST
-	@Path("/add new research")
+	@Path("/add unfinishedResearch")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertUnfinishedProject(String reasearchData) {
@@ -49,7 +52,9 @@ public class Research_service {
 
 		
 	}
+//=======================================================================================================================================
 	
+	//Deleting a research from the system using a json object
 	@DELETE
 	@Path("/deleteResearch")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -60,10 +65,12 @@ public class Research_service {
 
 	//Read the value from the element <itemID>
 		 String projectCode = researchObject.get("projectCode").getAsString();
-	 String output = researchObj.deleteReasearch(projectCode);
+	 String output = researchObj.deleteResearch(projectCode);
 	return output;
 	}
+//=======================================================================================================================================
 	
+	//Updating a finished research using a XML file to get the details
 	@PUT
 	@Path("/updateFinished")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -78,13 +85,12 @@ public class Research_service {
 		 String amount = researchObject.select("amount").text();
 		 String researcherID = researchObject.select("researcherID").text();
 
-		 
-		
-		 
 		 String output = researchObj.updateFinishedResearch(projectID , topic, amount , researcherID);
 		 return output;
 	}
-	
+//=======================================================================================================================================
+
+	//Updating an unfinished research using a XML file to get the details
 	@PUT
 	@Path("/updateUnfinished")
 	@Consumes(MediaType.APPLICATION_XML)
@@ -99,18 +105,17 @@ public class Research_service {
 		 String amount = researchObject.select("amount").text();
 		 String researcherID = researchObject.select("researcherID").text();
 
-		 
-		
-		 
 		 String output = researchObj.updateUnfinishedResearch(projectID , topic, amount , researcherID);
 		 return output;
 	}
-	
+//=======================================================================================================================================
+
+	//Reading an finished research using a XML file to get the details
 	@GET
-	@Path("/")
+	@Path("/readFinishedResearches")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String readFinishedResearches( String details)
+	public String readFinishedResearches(String details)
 	 {
 		 Document researchObject = Jsoup.parse(details, "", Parser.xmlParser());
 		 
@@ -118,12 +123,14 @@ public class Research_service {
 
 		 return researchObj.readFinishedResearches(researcherID); 
 	 } 
-	
+//=======================================================================================================================================
+
+	//Reading an unfinished research using a XML file to get the details
 	@GET
-	@Path("/unfinished")
+	@Path("/readunfinishedResearches")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String readUnfinishedResearches( String details)
+	public String readUnfinishedResearches(String details)
 	 {
 		 Document researchObject = Jsoup.parse(details, "", Parser.xmlParser());
 		 
@@ -131,6 +138,8 @@ public class Research_service {
 
 		 return researchObj.readUnfinishedResearches(researcherID); 
 	 } 
+//=======================================================================================================================================
+
 	
 	
 	

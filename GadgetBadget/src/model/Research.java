@@ -24,7 +24,8 @@ public class Research {
 		return con;
 		
 	 }
-
+//========================================================================================================
+	
 	public String insertFinishedResearch(String reasearcherID, String topic, String status, String price)
 	{
 		String output = "";
@@ -38,11 +39,10 @@ public class Research {
 					return "Error while connecting to the database for inserting.";
 				}
 				
-			// create a prepared statement
+			// create a prepared statements
 			String query = " insert into project values (NULL,?,?,?)";
 			String query2 = " insert into finished values (LAST_INSERT_ID(),?,NULL,NULL,?)";
 
-	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 			 PreparedStatement preparedStmt2 = con.prepareStatement(query2);
 
@@ -50,26 +50,26 @@ public class Research {
 			 preparedStmt.setInt(1, Integer.parseInt(reasearcherID));
 			 preparedStmt.setString(2, topic);
 			 preparedStmt.setString(3, status);
-			// execute the statement
+			 
 			 preparedStmt2.setInt(1, Integer.parseInt(reasearcherID));
-
 			 preparedStmt2.setFloat(2, Float.parseFloat(price));
 
-	
+			// execute the statements
 			 preparedStmt.execute();
 			 preparedStmt2.execute();
 
 			 con.close();
 			 
-			 output = "Inserted successfully";
+			 output = "Research inserted successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while inserting the reasearch.";
+				 output = "Error while inserting the research.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
 	 }
+//=============================================================================================================
 	
 	public String insertUnfinishedResearch(String researcherID, String topic, String status, String amount)
 	{
@@ -84,11 +84,10 @@ public class Research {
 					return "Error while connecting to the database for inserting.";
 				}
 				
-			// create a prepared statement
+			// create a prepared statements
 			String query = " insert into project values (NULL,?,?,?)";
 			String query2 = " insert into unfinished values (LAST_INSERT_ID(),?,NULL,?)";
 
-	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 			 PreparedStatement preparedStmt2 = con.prepareStatement(query2);
 
@@ -99,25 +98,25 @@ public class Research {
 			 
 			 preparedStmt2.setInt(1, Integer.parseInt(researcherID));
 			 preparedStmt2.setFloat(2, Float.parseFloat(amount));
-			// execute the statement
-			
-
+			 
+			// execute the statements
 			 preparedStmt.execute();
 			 preparedStmt2.execute();
 
 			 con.close();
 			 
-			 output = "Inserted successfully";
+			 output = "Research inserted successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while inserting the reasearch.";
+				 output = "Error while inserting the research.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
 	 }
+//===================================================================================================	
 	
-	public String deleteReasearch(String projectID)
+	public String deleteResearch(String projectID)
 	{
 		String output = "";
 		
@@ -127,34 +126,32 @@ public class Research {
 				
 				if (con == null)
 				{
-					return "Error while connecting to the database for inserting.";
+					return "Error while connecting to the database for deleting.";
 				}
 				
 			// create a prepared statement
 			String query = "delete from project where pid = ?";
 
-	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 
-			 // binding values
+			 // binding value
 			 preparedStmt.setInt(1, Integer.parseInt(projectID));
 			
 			// execute the statement
-			
-
 			 preparedStmt.execute();
 
 			 con.close();
 			 
-			 output = "Deleted successfully";
+			 output = " Research deleted successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while inserting the reasearch.";
+				 output = "Error while deleting the research.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
 	 }
+//================================================================================================================================
 	
 	public String updateFinishedResearch(String projectID , String topic, String amount , String researcherID)
 	{
@@ -166,13 +163,13 @@ public class Research {
 				
 				if (con == null)
 				{
-					return "Error while connecting to the database for inserting.";
+					return "Error while connecting to the database for updating.";
 				}
 				
 			// create a prepared statement
-			String query = "update project p,finished f set p.topic = ? ,f.price=? where  p.pid = ? and p.researcherID = ? and  f.pid = ? and f.researcherID = ?";
+			String query = "update project p,finished f set p.topic = ? ,f.price=? "
+					+ "where  p.pid = ? and p.researcherID = ? and  f.pid = ? and f.researcherID = ?";
 
-	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			 // binding values
@@ -184,24 +181,21 @@ public class Research {
 			 preparedStmt.setInt(5, Integer.parseInt(projectID));
 			 preparedStmt.setInt(6, Integer.parseInt(researcherID));
 
-			 
-			
 			// execute the statement
-			
-
 			 preparedStmt.execute();
 
 			 con.close();
 			 
-			 output = "Updated  successfully";
+			 output = "Research updated successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while inserting the reasearch.";
+				 output = "Error while updating the research.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
 	 }
+//=======================================================================================================================================
 	
 	public String updateUnfinishedResearch(String projectID , String topic, String amount , String researcherID)
 	{
@@ -213,13 +207,13 @@ public class Research {
 				
 				if (con == null)
 				{
-					return "Error while connecting to the database for inserting.";
+					return "Error while connecting to the database for updating.";
 				}
 				
 			// create a prepared statement
-			String query = "update project p,unfinished f set p.topic = ? ,f.requiredAmount=? where  p.pid = ? and p.researcherID = ? and  f.pid = ? and f.researcherID = ?";
+			String query = "update project p,unfinished f set p.topic = ? ,f.requiredAmount=? "
+					+ "where  p.pid = ? and p.researcherID = ? and  f.pid = ? and f.researcherID = ?";
 
-	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			 // binding values
@@ -231,24 +225,21 @@ public class Research {
 			 preparedStmt.setInt(5, Integer.parseInt(projectID));
 			 preparedStmt.setInt(6, Integer.parseInt(researcherID));
 
-			 
-			
 			// execute the statement
-			
-
 			 preparedStmt.execute();
 
 			 con.close();
 			 
-			 output = "Updated  successfully";
+			 output = "Research updated successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while inserting the reasearch.";
+				 output = "Error while updating the research.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
 	 }
+//============================================================================================================================================
 	
 	public String readFinishedResearches(String researcherID)
 	{
@@ -265,7 +256,7 @@ public class Research {
 				
 				if (con == null)
 				{
-					return "Error while connecting to the database for inserting.";
+					return "Error while connecting to the database for reading.";
 				}
 				
 			// create a prepared statement
@@ -274,6 +265,7 @@ public class Research {
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 			 preparedStmt.setString(1, researcherID);
 
+			 //Creating resultset to read values from the database
 			 ResultSet rs = preparedStmt.executeQuery();
 			 
 			 while(rs.next()) {
@@ -333,7 +325,7 @@ public class Research {
 				
 				if (con == null)
 				{
-					return "Error while connecting to the database for inserting.";
+					return "Error while connecting to the database for reading.";
 				}
 				
 			// create a prepared statement
@@ -341,7 +333,8 @@ public class Research {
 	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 			 preparedStmt.setString(1, researcherID);
-
+			 
+			 //Creating resultset to read values from the database
 			 ResultSet rs = preparedStmt.executeQuery();
 			 
 			 while(rs.next()) {
@@ -372,7 +365,7 @@ public class Research {
 
 				 
 				 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
-						 + "<td><form method='post' action='items.jsp'>"
+						 + "<td><form method='post' action='Research_service.java'>"
 						 + "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
 						 + "<input name='itemID' type='hidden' value='" + projectid
 						 + "'>" + "</form></td></tr>";
