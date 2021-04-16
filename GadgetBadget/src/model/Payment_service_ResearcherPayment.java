@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -93,4 +94,42 @@ public class Payment_service_ResearcherPayment {
 				
 		return output ;		
 	}	
+	
+	public String inserteResearcherPaymentRecord(int researcherId, float amount, String paymentStatus){
+		
+		String output = "";
+		
+		try{
+			
+			Connection con = connect();
+			
+			if (con == null)
+			{return "Error while connecting to the database for inserting."; }
+			
+			// create a prepared statement
+			String query = " insert into researcher_payment (`researcherId`,`amount`, `paymentStatus`) values (?, ?, ?)";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, researcherId);
+			preparedStmt.setFloat(2, amount);
+			preparedStmt.setString(3, paymentStatus);
+	
+			// execute the statement
+			preparedStmt.execute();
+			
+			con.close();
+			
+			output = "Inserted successfully";
+		}
+		catch (Exception e){
+			
+			output = "Error while inserting the researcher payment record.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
+	
 }

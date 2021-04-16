@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -99,5 +100,43 @@ public class Payment_service_OrderPayment {
 			
 		return output ;		
 	}
-
+	
+	public String insertOrderPaymentRecord(int pId, int orderId, int researcherId, float amount, String paymentStatus){
+		
+		String output = "";
+		
+		try{
+			
+			Connection con = connect();
+			
+			if (con == null)
+			{return "Error while connecting to the database for inserting."; }
+			
+			// create a prepared statement
+			String query = " insert into order_payment (`pId`, `orderId`, `researcherId`, `amount`, `paymentStatus`) values (?, ?, ?, ?, ?)";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, pId);
+			preparedStmt.setInt(2, orderId);
+			preparedStmt.setInt(3, researcherId);
+			preparedStmt.setFloat(4, amount);
+			preparedStmt.setString(5, paymentStatus);
+	
+			// execute the statement
+			preparedStmt.execute();
+			
+			con.close();
+			
+			output = "Inserted successfully";
+		}
+		catch (Exception e){
+			
+			output = "Error while inserting the order payment record.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }

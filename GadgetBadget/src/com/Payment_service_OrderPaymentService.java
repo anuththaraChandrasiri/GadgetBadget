@@ -2,10 +2,17 @@ package com;
 
 import model.Payment_service_OrderPayment;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+//For REST Service
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+//For JSON
+import com.google.gson.*;
+
+//For XML
+import org.jsoup.*;
+import org.jsoup.parser.*;
+import org.jsoup.nodes.Document;
 
 @Path("/OrderPaymentDetails")
 public class Payment_service_OrderPaymentService {
@@ -15,8 +22,25 @@ public class Payment_service_OrderPaymentService {
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public String readItems()
+	public String readOrderPayment(){
+	
+		return orderPayment.readOrderPaymentDetails();
+	}	
+	
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertOrderPayment(@FormParam("pId") String projectId, @FormParam("orderId") String oId,
+			@FormParam("researcherId") String rId, @FormParam("amount") String totAmount, @FormParam("paymentStatus") String paymentStatus)
 	{
-	return orderPayment.readOrderPaymentDetails();
-	}		
+		int pId = Integer.parseInt(projectId);
+		int orderId = Integer.parseInt(oId);
+		int researcherId = Integer.parseInt(rId);
+		float amount = Float.parseFloat(totAmount);
+		
+		String output = orderPayment.insertOrderPaymentRecord(pId, orderId, researcherId, amount, paymentStatus);
+		
+		return output;
+	}	
 }

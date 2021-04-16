@@ -2,10 +2,15 @@ package com;
 
 import model.Payment_service_ResearcherPayment;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+//For REST Service
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+//For JSON
+import com.google.gson.*;
+//For XML
+import org.jsoup.*;
+import org.jsoup.parser.*;
+import org.jsoup.nodes.Document;
 
 @Path("/ResearcherPaymentDetails")
 public class Payment_service_ResearcherPaymentService {
@@ -15,9 +20,23 @@ public class Payment_service_ResearcherPaymentService {
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
-	public String readItems()
-	{
-	return researcherPayment.readResearcherPaymentDetails();
+	public String readResearcherPayment(){
+	
+		return researcherPayment.readResearcherPaymentDetails();
 	}	
+	
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertResearcherPayment(@FormParam("researcherId") String researcherId, @FormParam("amount") String totAmount,
+			@FormParam("paymentStatus") String paymentStatus)
+	{
+		int rId = Integer.parseInt(researcherId);
+		float amount = Float.parseFloat(totAmount);
+		
+		String output = researcherPayment.inserteResearcherPaymentRecord(rId, amount, paymentStatus);
+		return output;
+	}
 
 }
