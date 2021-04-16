@@ -154,4 +154,42 @@ public class Payment_service_PaymentDetails {
 					
 		return output ;		
 	}
+	
+	public String updateUserPaymentDetailsRecord(String userId, String cardNumber, String CVV, String expDate) {
+		
+		String output = "";
+		
+		try {
+			
+			Connection con = connect();
+			
+			if (con == null) {
+				
+				return "Error while connecting to the database for updating."; 
+			}
+			
+			// Creating a prepared statement
+			String query = "update user set cardNumber = ?, CVV = ?, expDate = STR_TO_DATE(?,'%Y/%m/%d') WHERE userId = ?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// Binding values
+			preparedStmt.setString(1, cardNumber);
+			preparedStmt.setInt(2, Integer.parseInt(CVV));
+			preparedStmt.setString(3, expDate);
+			preparedStmt.setInt(4, Integer.parseInt(userId));
+				
+			//Executing the statement
+			preparedStmt.execute();
+			con.close();
+			output = "Updated successfully";
+		}
+		catch (Exception e)	{
+
+			output = "Error while updating the user payment details record.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }
