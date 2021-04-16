@@ -1,19 +1,18 @@
 package com;
 
-import javax.ws.rs.GET;
+import javax.ws.rs.GET;  
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/Payment")
-public class Payment {
+@Path("/Product")
+public class Product {
 	
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String hello()
-	{
-	return "Hello world.";
+	{		
+	return "Hello!! This is cart.";
 	}
-
 }
