@@ -43,4 +43,21 @@ public class Payment_service_OrderPaymentService {
 		
 		return output;
 	}	
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteOrderPayment(String orderPaymentData)
+	{
+		//Converting the input string to an XML document
+		Document doc = Jsoup.parse(orderPaymentData, "", Parser.xmlParser());
+		
+		//Reading the value from the element <userId>
+		int orderPaymentId = Integer.parseInt(doc.select("oPaymentId").text());
+		
+		String output = orderPayment.deleteOrderPaymentRecord(orderPaymentId);
+		
+		return output;
+	}
 }

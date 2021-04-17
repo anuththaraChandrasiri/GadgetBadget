@@ -38,5 +38,23 @@ public class Payment_service_ResearcherPaymentService {
 		String output = researcherPayment.inserteResearcherPaymentRecord(rId, amount, paymentStatus);
 		return output;
 	}
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteResearcherPayment(String researcherPaymentData)
+	{
+		//Converting the input string to an XML document
+		Document doc = Jsoup.parse(researcherPaymentData, "", Parser.xmlParser());
+		
+		//Reading the value from the element <userId>
+		int researcherPaymentId = Integer.parseInt(doc.select("rPaymentId").text());
+		
+		String output = researcherPayment.deleteResearcherPaymentRecord(researcherPaymentId);
+		
+		return output;
+	}
+
 
 }

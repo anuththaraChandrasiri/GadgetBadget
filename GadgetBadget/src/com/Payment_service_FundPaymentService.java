@@ -41,5 +41,22 @@ public class Payment_service_FundPaymentService {
 		
 		return output;
 	}
+	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteFundPaymentRecord(String fundPaymentData)
+	{
+		//Converting the input string to an XML document
+		Document doc = Jsoup.parse(fundPaymentData, "", Parser.xmlParser());
+		
+		//Reading the value from the element <userId>
+		int fundPaymentId = Integer.parseInt(doc.select("fPaymentId").text());
+		
+		String output = fundPayment.deleteFundPaymentRecord(fundPaymentId);
+		
+		return output;
+	}
 
 }

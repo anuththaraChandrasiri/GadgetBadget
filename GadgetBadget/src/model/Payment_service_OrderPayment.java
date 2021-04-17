@@ -139,4 +139,40 @@ public class Payment_service_OrderPayment {
 		
 		return output;
 	}
+	
+	public String deleteOrderPaymentRecord(int orderPaymentId){
+		
+		String output = "";
+		
+		try	{
+			
+			Connection con = connect();
+			
+			if (con == null){
+				
+				return "Error while connecting to the database for deleting.";
+			}
+			
+			// Creating a prepared statement
+			String query = "delete from order_payment where oPaymentId = ?";
+	
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// Binding values
+			preparedStmt.setInt(1, orderPaymentId);
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting an order payment record.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+	
 }

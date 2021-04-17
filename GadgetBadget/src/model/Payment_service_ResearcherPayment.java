@@ -132,4 +132,39 @@ public class Payment_service_ResearcherPayment {
 		return output;
 	}
 	
+	public String deleteResearcherPaymentRecord(int researcherPaymentId){
+		
+		String output = "";
+		
+		try	{
+			
+			Connection con = connect();
+			
+			if (con == null){
+				
+				return "Error while connecting to the database for deleting.";
+			}
+			
+			// Creating a prepared statement
+			String query = "delete from researcher_payment where rPaymentId = ?";
+	
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// Binding values
+			preparedStmt.setInt(1, researcherPaymentId);
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting a researcher payment record.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+	
 }

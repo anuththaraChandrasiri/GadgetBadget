@@ -139,4 +139,39 @@ public class Payment_service_FundPayment {
 		
 		return output;
 	}
+	
+	public String deleteFundPaymentRecord(int fundPaymentId){
+		
+		String output = "";
+		
+		try	{
+			
+			Connection con = connect();
+			
+			if (con == null){
+				
+				return "Error while connecting to the database for deleting.";
+			}
+			
+			// Creating a prepared statement
+			String query = "delete from fund_payment where fPaymentId = ?";
+	
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// Binding values
+			preparedStmt.setInt(1, fundPaymentId);
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting a fund payment record.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
 }
