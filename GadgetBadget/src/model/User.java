@@ -92,7 +92,7 @@ public class User {
 	
 	
 	
-	public String insertUser(String fname, String lname, String uname, String email,String cnumber,String cvv,String expdate,String password)
+	public String insertUser(String uname, String email,String fname, String lname,String cnumber,String CVV,String expdate,String password)
 	{
 		String output = "";
 		try
@@ -104,16 +104,17 @@ public class User {
 			}
 
 			// create a prepared statement
-			String query = " insert into user('firstName','lastName','userName','email','cardNumber','CVV','expDate','password') values (?, ?, ?, ?, ?, ?, ?, ?,?)";
+			String query = "insert into user ('userId','userName','email','firstName','lastName','cardNumber','CVV','expDate','password') values (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
 			// binding values
-			preparedStmt.setString(2, fname);
-			preparedStmt.setString(3, lname);
-			preparedStmt.setString(4, uname);
-			preparedStmt.setString(5, email);
-			preparedStmt.setString(6, cnumber);
-			preparedStmt.setString(7, cvv);
+			preparedStmt.setInt(1,0);
+			preparedStmt.setString(2, uname);
+			preparedStmt.setString(3, email);
+			preparedStmt.setString(4, fname);
+			preparedStmt.setString(5, lname);
+			preparedStmt.setInt(6, Integer.parseInt(cnumber));
+			preparedStmt.setInt(7, Integer.parseInt(CVV));
 			preparedStmt.setString(8, expdate);
 			preparedStmt.setString(9, password);
 			
@@ -129,6 +130,42 @@ public class User {
 		}
 		return output;
 	}
+	public String updateUser(String userId,String fname, String lname, String uname, String email,String cnumber,String CVV,String expdate,String password)
+	{
+		 String output = "";
+		 try
+		 {
+		 Connection con = connect();
+		 if (con == null)
+		 {
+			 return "Error while connecting to the database for updating."; }
+			
+		 	// create a prepared statement
+			 String query = "UPDATE user SET userName=?,email=?,firstName=?,lastName=?,cardNumber=?,CVV=?,expDate=STR_TO_DATE(?,'%Y/%m/%d'),password=? WHERE userId=?";
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 
+			 // binding values
+			 preparedStmt.setString(3, uname);
+			 preparedStmt.setString(4, email);
+		 	 preparedStmt.setString(1, fname);
+			 preparedStmt.setString(2, lname);
+			 preparedStmt.setInt(5, Integer.parseInt(cnumber));
+			 preparedStmt.setInt(6, Integer.parseInt(CVV));
+			 preparedStmt.setString(7, expdate);
+			 preparedStmt.setString(8, password);
+			 preparedStmt.setInt(9, Integer.parseInt(userId));
+			 // execute the statement
+			 preparedStmt.execute();
+			 con.close();
+			 output = "Updated successfully";
+		 }
+		 catch (Exception e)
+		 {
+			 output = "Error while updating the User.";
+			 System.err.println(e.getMessage());
+		 }
+		 	return output;
+		 }
 	
 	
 }

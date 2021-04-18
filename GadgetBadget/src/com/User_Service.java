@@ -31,19 +31,44 @@ public class User_Service
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertUser(@FormParam("firstName") String firstName,
-		 @FormParam("lastName") String lastName,
-		 @FormParam("userName") String userName,
+	public String insertUser(@FormParam("userName") String userName,
 		 @FormParam("email") String email,
+		 @FormParam("firstName") String firstName,
+		 @FormParam("lastName") String lastName,
 		 @FormParam("cardNumber") String cardNumber,
 		 @FormParam("CVV") String CVV,
 		 @FormParam("expDate") String expDate,
 		 @FormParam("password") String password)
 	{
-		 String output = userObj.insertUser(firstName,lastName,userName,email,cardNumber,CVV,expDate,password);
+		 String output = userObj.insertUser(userName,email,firstName,lastName,cardNumber,CVV,expDate,password);
 		return output;
 	}
 
-
+	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateUser(String userData)
+	{
+		//Convert the input string to a JSON object
+		 JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
+		
+		 //Read the values from the JSON object
+		 
+		 String userId = userObject.get("userId").getAsString();	
+		 String firstName = userObject.get("firstName").getAsString();
+		 String lastName = userObject.get("lastName").getAsString();
+		 String userName = userObject.get("userName").getAsString();
+		 String email = userObject.get("email").getAsString();
+		 String cardNumber = userObject.get("cardNumber").getAsString();
+		 String CVV = userObject.get("CVV").getAsString();
+		 String expDate = userObject.get("expDate").getAsString();
+		 String password = userObject.get("password").getAsString();
+				
+		 String output = userObj.updateUser(userId, firstName, lastName, userName,email,cardNumber,CVV,expDate,password);
+	
+		 return output;
+	}
 
 }
