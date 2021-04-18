@@ -1,5 +1,5 @@
 package com;
-import module.Product; 
+import model.Product;  
 
 import java.sql.Date;
 import java.sql.Time;
