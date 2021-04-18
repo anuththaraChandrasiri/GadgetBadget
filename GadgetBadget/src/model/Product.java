@@ -1,7 +1,7 @@
 package model;
 
-import java.sql.*;
-import java.text.SimpleDateFormat; 
+import java.sql.*; 
+import java.text.SimpleDateFormat;
  
 public class Product {
 
@@ -10,26 +10,27 @@ public class Product {
 		Connection con = null;
 		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/gadget2","root", "");
+			Class.forName("com.mysql.jdbc.Driver"); 
+			 con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/gadget2","root", ""); 
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		System.out.print(con);
 		return con;
 	}
 	
-	public String addToCart(String pid,String researcherId,Date date,Time time,String totAmount,String status) 
+	public String addToCart(String pid,String researcherId,String date,Time time,String totAmount,String status) 
 	{		
 		String output = "";
 		try {
 			Connection con = connect();
 			
 			if(con == null) {
-				return "Error while connecting to the database for reading.";
+				return "Error while connecting to the database";
 			}			
 		
-		String query = "insert into order(`orderId`,`pid`,`researcherId`,`date`,`time`,`totAmount`,`status`)"
+		String query = "insert into `order`(`orderId`,`pid`,`researcherId`,`date`,`time`,`totAmount`,`status`)"
 				+ "values(?,?,?,?,?,?,?)";
 		
 		PreparedStatement prepareStmt = con.prepareStatement(query);
@@ -37,7 +38,7 @@ public class Product {
 		prepareStmt.setInt(1, 0);
 		prepareStmt.setInt(2,  Integer.parseInt(pid));
 		prepareStmt.setInt(3,  Integer.parseInt(researcherId));
-		prepareStmt.setDate(4, date);
+		prepareStmt.setString(4, date);
 		prepareStmt.setTime(5, time);
 		prepareStmt.setFloat(6, Float.parseFloat(totAmount));
 		prepareStmt.setString(7, status);
@@ -60,43 +61,51 @@ public class Product {
 		String output = "";
 		try {
 			Connection con =  connect();
-			
+			System.out.print(con);
 			if(con == null) {
+				System.out.print("hello");
 				return "Error while connecting to the database for reading.";
+				
 			}
+			System.out.print("hellofirst");
+			output = "<table border ='1'><tr><th>projectID</th>" +
+					 "<th>date</th>" +
+					 "<th>time</th>" +
+					 "<th>TotalAmount</th>" +
+					 "<th>status</th>" +
+					 "<th>Update</th>" +
+					 "<th>Remove</th></tr>"; 
+			System.out.print("hellosecond");
 			
-			output = "<table border ='1'><tr><td>projectID</td>" +
-					 "<td>date</td>" +
-					 "<td>time</td>" +
-					 "<td>TotalAmount</td>" +
-					 "<td>status</td>" +
-					 "<td>Update</td>" +
-					 "<td>Remove</td></tr>"; 
+			String query = "SELECT * FROM `order`";
+			Statement stmt = con.createStatement(); 
+			ResultSet rs = stmt.executeQuery(query); 
 			
-			String query = "select * from order";
-			Statement stmt = con.createStatement();
-			ResultSet rs   = stmt.executeQuery(query);
-			
+			System.out.print("helloThird");
 			while(rs.next()) {
 				String orderId = Integer.toString(rs.getInt("orderId"));
 				String pid = Integer.toString(rs.getInt("pid"));
 				String researcherId = Integer.toString(rs.getInt("researcherId"));
-				SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
-			    String date = formatter.format("date"); 
+				String date = rs.getString("date"); 
 			    Time timeObj = rs.getTime("time");
 			    String time = timeObj.toString();
 			    String totAmount = Float.toString(rs.getFloat("totAmount"));
 			    String status = rs.getString("status");
 			
 				output += "<tr><td>"+ pid + "</td>";
-				output += "<tr><td>"+ date + "</td>";
-				output += "<tr><td>"+ time + "</td>";
-				output += "<tr><td>"+ totAmount + "</td>";
-				output += "<tr><td>"+ status + "</td>";
+				output += "<td>"+ date + "</td>";
+				output += "<td>"+ time + "</td>";
+				output += "<td>"+ totAmount + "</td>";
+				output += "<td>"+ status + "</td>";
+				
+				System.out.println(pid);
+				System.out.println(orderId);
+				System.out.println(time);
+				System.out.println(totAmount);
 				
 				output += "<td><input name = 'btnUpdate' type = 'button' value = 'Update' class='btn btn-secondary'></td>"
-				+ "<td><form method = 'post' action = 'products.jsp'>"
-				+ "<input name='btnRemove' type = 'button' value = 'Delete' class='btn btn-danger'>"
+				+ "<td><form method = 'post' action = 'items.jsp'>"
+				+ "<input name='btnRemove' type = 'submit' value = 'Delete' class='btn btn-danger'>"
 				+ "<input name = 'orderId' type = 'hidden' value = '"+orderId+"'>"
 				+ "</form></td></tr>";
 			}
@@ -130,8 +139,8 @@ public class Product {
 			
 			stmt.setInt(1,Integer.parseInt(pid));
 			stmt.setInt(2,Integer.parseInt(researcherId));
-//			stmt.setDate(3,date);
-//			stmt.setTime(4,time);
+			stmt.setString(3,date);
+			stmt.setString(4,time);
 			stmt.setFloat(5,Float.parseFloat(totAmount));
 			stmt.setString(6,status);
 			
@@ -151,7 +160,6 @@ public class Product {
 	public String deleteCartItem(String orderId) {
 		
 		String output = "";
-		
 		try {
 			Connection con = connect();
 			

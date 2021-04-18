@@ -19,22 +19,6 @@ public class ProductService {
 	
 	Product obPro = new Product();
 	
-	@POST
-	@Path("/") 
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
-	@Produces(MediaType.TEXT_PLAIN)
-	public String addToCart( 
-			 @FormParam("pid") String pid, 
-			 @FormParam("researcherId") String researcherId, 
-			 @FormParam("date") Date date,
-			 @FormParam("time") Time time,
-			 @FormParam("totAmount") String totAmount,
-			 @FormParam("status") String status) 
-			{ 
-			 String output = obPro.addToCart(pid, researcherId, date,time,totAmount,status); 
-			return output; 
-			}
-	
 	@GET
 	@Path("/") 
 	@Produces(MediaType.TEXT_HTML) 
@@ -48,15 +32,32 @@ public class ProductService {
 	 
 	 }
 	
+	@POST
+	@Path("/") 
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED) 
+	@Produces(MediaType.TEXT_PLAIN)
+	public String addToCart( 
+			 @FormParam("pid") String pid, 
+			 @FormParam("researcherId") String researcherId, 
+			 @FormParam("date") String date,
+			 @FormParam("time") Time time,
+			 @FormParam("totAmount") String totAmount,
+			 @FormParam("status") String status) 
+			{ 
+			 String output = obPro.addToCart(pid, researcherId, date,time,totAmount,status); 
+			return output; 
+			}
+	
+	
 	@PUT
 	@Path("/") 
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@Produces(MediaType.TEXT_PLAIN) 
 	
-	public String updateCart(String productData) 
+	public String updateCart(String itemData) 
 	{ 
 	//Convert the input string to a JSON object 
-	 JsonObject cartObject = new JsonParser().parse(productData).getAsJsonObject(); 
+	 JsonObject cartObject = new JsonParser().parse(itemData).getAsJsonObject(); 
 	//Read the values from the JSON object
 	 String orderId = cartObject.get("orderId").getAsString(); 
 	 String pid = cartObject.get("pid").getAsString(); 
@@ -76,14 +77,15 @@ public class ProductService {
 	@Consumes(MediaType.APPLICATION_XML) 
 	@Produces(MediaType.TEXT_PLAIN) 
 	
-	public String deleteCartItem(String cartData) 
-	{ 
+	public String deleteCartItem(String itemData) 
+	{  
 	//Convert the input string to an XML document
-	 Document doc = Jsoup.parse(cartData, "", Parser.xmlParser()); 
+	 Document doc = Jsoup.parse(itemData, "", Parser.xmlParser()); 
 	 
-	//Read the value from the element <itemID>
+	//Read the value<orderId>
 	 String orderId = doc.select("orderId").text(); 
 	 String output = obPro.deleteCartItem(orderId); 
+	 System.out.print(orderId);
 	return output; 
 	}
 
