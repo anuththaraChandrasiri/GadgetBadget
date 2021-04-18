@@ -1,4 +1,4 @@
-package module;
+package model;
 
 import java.sql.*;
 import java.text.SimpleDateFormat; 
