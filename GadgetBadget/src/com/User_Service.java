@@ -27,6 +27,14 @@ public class User_Service
 		return userObj.readUsers();
 	}
 	
+	@GET
+	@Path("/User/{userId}")
+	@Produces(MediaType.TEXT_HTML)
+	public String readUserDetails(@PathParam("userId") int userId){
+	
+		return userObj.readUserDetails(userId);
+	}
+	
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
