@@ -19,6 +19,7 @@ public class User_Service
 {
 	User userObj = new User();
 	
+	
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
@@ -36,22 +37,22 @@ public class User_Service
 	}
 	
 	@POST
-	@Path("/")
+	@Path("/User")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertUser(@FormParam("userName") String userName,
+	public String insertUsers(@FormParam("userName") String userName,
 		 @FormParam("email") String email,
 		 @FormParam("firstName") String firstName,
 		 @FormParam("lastName") String lastName,
 		 @FormParam("cardNumber") String cardNumber,
-		 @FormParam("CVV") String CVV,
+		 @FormParam("cvv") String cvv,
 		 @FormParam("expDate") String expDate,
 		 @FormParam("password") String password)
 	{
-		 String output = userObj.insertUser(userName,email,firstName,lastName,cardNumber,CVV,expDate,password);
+		 String output = userObj.insertUsers(userName, email, firstName, lastName,cardNumber,cvv,expDate,password);
 		return output;
 	}
-
+	
 	
 	@PUT
 	@Path("/")
