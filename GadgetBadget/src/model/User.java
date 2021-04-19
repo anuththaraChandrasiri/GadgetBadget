@@ -168,4 +168,34 @@ public class User {
 		 }
 	
 	
+	public String deleteUser(String userId)
+	 {
+		String output = "";
+	 try
+	 {
+		 Connection con = connect();
+		 if (con == null)
+		 {
+			 return "Error while connecting to the database for deleting."; }
+			 
+		 	// create a prepared statement
+			 String query = "delete from user where userId=?";
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 
+			 // binding values
+			 preparedStmt.setInt(1, Integer.parseInt(userId));
+			 
+			 // execute the statement
+			 preparedStmt.execute();
+			 con.close();
+			 output = "Deleted successfully";
+		 }
+		 catch (Exception e)
+		 {
+			 output = "Error while deleting the User.";
+			 System.err.println(e.getMessage());
+		 }
+		 	return output;
+		 }
+	
 }
