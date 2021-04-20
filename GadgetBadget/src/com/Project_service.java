@@ -20,7 +20,7 @@ import com.google.gson.JsonParser;
 
 import model.Project;
 
-@Path("/Project")
+@Path("/project")
 public class Project_service {
 	
 	Project researchObj = new Project();
@@ -121,16 +121,13 @@ public class Project_service {
 	//Reading an finished research using a XML file to get the details
 	@GET
 	@Path("/view/researcher/finished")
-	@Consumes(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String readFinishedResearches(String details) throws IOException
 	 {
-		 Document researchObject = Jsoup.parse(details, "", Parser.xmlParser());
-		 
-		 String researcherID = researchObject.select("researcherID").text();
+		JsonObject researchObject = new JsonParser().parse(details).getAsJsonObject();
 
-
-
+		 String researcherID = researchObject.get("researcherID").getAsString();	
 
 		 return researchObj.readFinishedProjects(researcherID); 
 	 } 
@@ -139,13 +136,13 @@ public class Project_service {
 	//Reading an unfinished research using a XML file to get the details
 	@GET
 	@Path("/view/researcher/unfinished")
-	@Consumes(MediaType.APPLICATION_XML)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String readUnfinishedResearches(String details)
 	 {
-		 Document researchObject = Jsoup.parse(details, "", Parser.xmlParser());
-		 
-		 String researcherID = researchObject.select("researcherID").text();
+		JsonObject researchObject = new JsonParser().parse(details).getAsJsonObject();
+
+		 String researcherID = researchObject.get("researcherID").getAsString();
 
 		 return researchObj.readUnfinishedProjects(researcherID); 
 	 } 

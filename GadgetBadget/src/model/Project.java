@@ -60,11 +60,11 @@ public class Project {
 
 			 con.close();
 			 
-			 output = "Research inserted successfully";
+			 output = "Project inserted successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while inserting the research.";
+				 output = "Error while inserting the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -105,11 +105,11 @@ public class Project {
 
 			 con.close();
 			 
-			 output = "Research inserted successfully";
+			 output = "Project inserted successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while inserting the research.";
+				 output = "Error while inserting the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -142,11 +142,11 @@ public class Project {
 
 			 con.close();
 			 
-			 output = " Research deleted successfully";
+			 output = " Project deleted successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while deleting the research.";
+				 output = "Error while deleting the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -186,11 +186,11 @@ public class Project {
 
 			 con.close();
 			 
-			 output = "Research updated successfully";
+			 output = "Project updated successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while updating the research.";
+				 output = "Error while updating the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -230,11 +230,11 @@ public class Project {
 
 			 con.close();
 			 
-			 output = "Research updated successfully";
+			 output = "Project updated successfully";
 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while updating the research.";
+				 output = "Error while updating the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -260,7 +260,8 @@ public class Project {
 				}
 				
 			// create a prepared statement
-			String query = "Select * from finished f , project p where p.pid = f.pid  and p.researcherid = ?";
+			String query = "Select * from finished f , project p , client r , user u where p.pid = f.pid and "
+					+ "f.clientId = r.clientId and r.clientId = u.userid  and f.researcherid =?";
 	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 			 preparedStmt.setString(1, researcherID);
@@ -271,7 +272,9 @@ public class Project {
 			 while(rs.next()) {
 				 String projectid = rs.getString("pid");
 				 String name = rs.getString("topic");
-				 String client = rs.getString("clientid");
+				 String clientID = rs.getString("clientid");
+
+				 String client = rs.getString("firstName")+" " + rs.getString("lastName");
 				 String status = rs.getString("status");
 				 String price = rs.getString("price");
 				 
@@ -304,7 +307,7 @@ public class Project {
 			 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while reading the reasearches.";
+				 output = "Error while reading the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -329,7 +332,8 @@ public class Project {
 				}
 				
 			// create a prepared statement
-			String query = "Select * from unfinished f , project p where p.pid = f.pid  and p.researcherid = ?";
+			String query = "Select * from unfinished f , project p , client r , user u where p.pid = f.pid and "
+					+ "f.clientId = r.clientId and r.clientId = u.userid  and f.researcherid =?";
 	 
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 			 preparedStmt.setString(1, researcherID);
@@ -340,7 +344,7 @@ public class Project {
 			 while(rs.next()) {
 				 String projectid = rs.getString("pid");
 				 String name = rs.getString("topic");
-				 String client = rs.getString("clientid");
+				 String client = rs.getString("firstName")+" " + rs.getString("lastName");
 				 String status = rs.getString("status");
 				 String price = rs.getString("requiredAmount");
 				 
@@ -377,7 +381,7 @@ public class Project {
 			 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while reading the reasearches.";
+				 output = "Error while reading the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -433,7 +437,7 @@ public class Project {
 			 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while reading the reasearches.";
+				 output = "Error while reading the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;
@@ -496,7 +500,7 @@ public class Project {
 			 			 }
 			 catch (Exception e)
 			 {
-				 output = "Error while reading the reasearches.";
+				 output = "Error while reading the Project.";
 				 System.err.println(e.getMessage());
 			 }
 			 return output;

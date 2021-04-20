@@ -8,7 +8,7 @@
 </servlet>
 <servlet-mapping>
  <servlet-name>Jersey Web Application</servlet-name>
- <url-pattern>/ItemService/*</url-pattern>
+ <url-pattern>/ProjectService/*</url-pattern>
 </servlet-mapping>
   
   
