@@ -234,6 +234,7 @@ public class User {
 		 return output;
 	 }
 	
+	
 	//=============Read all Researchers ===============
 	
 		public String readResearchers()
