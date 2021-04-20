@@ -164,7 +164,7 @@ public class User {
 		
 		
 		
-	//============================================================	
+	//===========================================================================
 	
 	//=============Read all Clients ===============
 	
@@ -180,7 +180,7 @@ public class User {
 		 
 		 // Prepare the html table to be displayed
 		 output = "<table border='1'><tr>"+
-		 "<th>Client Name</th>" +
+		 "<th>Client User Name</th>" +
 		 "<th>Email</th>" +
 		 "<th>First Name</th><th>Last Name</th>" +
 		 "<th>Card Number</th>" +
@@ -249,7 +249,7 @@ public class User {
 			 
 			 // Prepare the html table to be displayed
 			 output = "<table border='1'><tr>"+
-			 "<th>Client Name</th>" +
+			 "<th>Researcher User Name</th>" +
 			 "<th>Email</th>" +
 			 "<th>First Name</th><th>Last Name</th>" +
 			 "<th>Card Number</th>" +
@@ -318,7 +318,7 @@ public class User {
 				 
 				 // Prepare the html table to be displayed
 				 output = "<table border='1'><tr>"+
-				 "<th>Client Name</th>" +
+				 "<th>Admin User Name</th>" +
 				 "<th>Email</th>" +
 				 "<th>First Name</th><th>Last Name</th>" +
 				 "<th>Card Number</th>" +
@@ -373,7 +373,8 @@ public class User {
 			 }	
 	
 		
-		
+	//=========================================================================
+			
 	//=============Read details of a individual User Method===============
 	
 	public String readUserDetails(String userName,String password)
@@ -437,6 +438,8 @@ public class User {
 	 }
 		 return output;
 	 }
+	
+	//===========================================================================
 	
 	//=============Updating an User Method===============
 
