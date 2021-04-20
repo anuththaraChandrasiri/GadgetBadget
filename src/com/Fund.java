@@ -183,5 +183,12 @@ public class Fund {
 		
 		return output;
 	}
+	public String updateFund(String fId , String pId , String resId , String cliId , String amount) {
+		
+		String output = "";
+		
+		
+		return output;
+	}
 
 }
