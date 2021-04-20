@@ -135,7 +135,7 @@ public class Project_service {
 		 return researchObj.readFinishedProjects(researcherID); 
 	 } 
 //=======================================================================================================================================
-//This is a test comment
+
 	//Reading an unfinished research using a XML file to get the details
 	@GET
 	@Path("/view/researcher/unfinished")
@@ -151,7 +151,22 @@ public class Project_service {
 	 } 
 //=======================================================================================================================================
 
+	@GET
+	@Path("/view/client/unfinished")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String readUnfinishedResearches()
+	 {
+		 		 return researchObj.readUnfinishedProjects(); 
+	 }
+//========================================================================================================================================
 	
+	@GET
+	@Path("/view/client/finished")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String readfinishedResearches()
+	 {
+		 		 return researchObj.readfinishedProjects(); 
+	 }
 	
 	
 

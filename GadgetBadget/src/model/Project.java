@@ -382,6 +382,123 @@ public class Project {
 			 }
 			 return output;
 	 }
+//===============================================================================================================================================
 	
+	public String readUnfinishedProjects()
+	{
+		String  output = "<table border='1'><tr><th>ProjectID</th>"
+				+ "<th>Project Name</th>" +
+				 "<th>Funds Required</th>" +
+				 "<th>Researcher</th>" ;
+		
+		try
+		{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for reading.";
+				}
+				
+			// create a prepared statement
+			String query = "Select * from unfinished f , project p , researcher r , user u where p.pid = f.pid and p.researcherid = r.researcherid"
+					+ " and r.researcherid = u.userid and f.clientid is null";
+	 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 
+			 //Creating resultset to read values from the database
+			 ResultSet rs = preparedStmt.executeQuery();
+			 
+			 while(rs.next()) {
+				 String projectid = rs.getString("pid");
+				 String name = rs.getString("topic");
+				 String researcher = rs.getString("firstName") + " " + rs.getString("lastName");
+				 String status = rs.getString("status");
+				 String price = rs.getString("requiredAmount");
+				 
+				 output += "<tr><td>" + projectid + "</td>";
+				 output += "<td>" + name + "</td>";
+				 output += "<td>" + price + "</td>";
+				 output += "<td>" + researcher + "</td>";
+				 output += "<td><input name='btnCart' type='button' value='View Details' class='btn btn-secondary'></td>"
+						 + "<td><form method='post' action='Research_service.java'>"
+						 + "<input name='btnBuy' type='button' value='Fund now' class='btn btn-danger'>"
+						 + "<input name='itemID' type='hidden' value='" + projectid
+						 + "'>" + "</form></td></tr>";
+			 
+			 }
+			 con.close();
+			 output += "</table>";
+
+			 			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while reading the reasearches.";
+				 System.err.println(e.getMessage());
+			 }
+			 return output;
+	 }
+//====================================================================================================================================================
 	
+	public String readfinishedProjects()
+	{
+		String  output = "<table border='1'><tr><th>ProjectID</th>"
+				+ "<th>Project Name</th>" +
+				 "<th>Price</th>" +
+				 "<th>Researcher</th>" ;
+		
+		try
+		{
+				Connection con = connect();
+				
+				if (con == null)
+				{
+					return "Error while connecting to the database for reading.";
+				}
+				
+			// create a prepared statement
+			String query = "Select * from finished f , project p , researcher r , user u where p.pid = f.pid and p.researcherid = r.researcherid"
+					+ " and r.researcherid = u.userid and f.clientid is null";
+	 
+			 PreparedStatement preparedStmt = con.prepareStatement(query);
+			 
+			 //Creating resultset to read values from the database
+			 ResultSet rs = preparedStmt.executeQuery();
+			 
+			 while(rs.next()) {
+				 String projectid = rs.getString("pid");
+				 String name = rs.getString("topic");
+				 String researcher = rs.getString("firstName") + " " + rs.getString("lastName");
+				 String status = rs.getString("status");
+				 String price = rs.getString("price");
+				 
+				 output += "<tr><td>" + projectid + "</td>";
+				 output += "<td>" + name + "</td>";
+				 output += "<td>" + price + "</td>";
+				 output += "<td>" + researcher + "</td>";
+
+				 
+				
+
+				 
+				 output += "<td><input name='btnCart' type='button' value='View Details' class='btn btn-secondary'></td>"
+						 + "<td><form method='post' action='Research_service.java'>"
+						 + "<input name='btnBuy' type='button' value='Buy now' class='btn btn-danger'>"
+						 + "<input name='btnBuy' type='button' value='Add to cart ' class='btn btn-danger'>"
+
+						 + "<input name='itemID' type='hidden' value='" + projectid
+						 + "'>" + "</form></td></tr>";
+			 
+			 }
+			 con.close();
+			 output += "</table>";
+
+			 			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while reading the reasearches.";
+				 System.err.println(e.getMessage());
+			 }
+			 return output;
+	 }
 }
