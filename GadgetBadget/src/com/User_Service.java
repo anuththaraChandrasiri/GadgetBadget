@@ -19,15 +19,36 @@ public class User_Service
 {
 	User userObj = new User();
 	
-	//=========== Reading Details of All users ================================
+	//=========== Reading Details of All Clients ================================
 	
 	@GET
-	@Path("/")
+	@Path("/Client")
 	@Produces(MediaType.TEXT_HTML)
-	public String readUsers()
+	public String readClients()
 	{
-		return userObj.readUsers();
+		return userObj.readClients();
 	}
+	
+	//=========== Reading Details of All Researchers ================================
+	
+	@GET
+	@Path("/Researcher")
+	@Produces(MediaType.TEXT_HTML)
+	public String readResearchers()
+	{
+		return userObj.readResearchers();
+	}
+	
+	//=========== Reading Details of All Admins ================================
+	
+	@GET
+	@Path("/Admin")
+	@Produces(MediaType.TEXT_HTML)
+	public String readAdmins()
+	{
+		return userObj.readAdmins();
+	}
+	
 	
 	//=========== Reading Details of a specific User for login ================================
 	
@@ -40,13 +61,14 @@ public class User_Service
 		return userObj.readUserDetails(userName,password);
 	}
 	
-	//=========== Adding a new user ================================
+	//========================================================================
+	//=========== Adding a new client ================================
 	
 	@POST
-	@Path("/User")
+	@Path("/Client")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertUsers(@FormParam("userName") String userName,
+	public String insertClient(@FormParam("userName") String userName,
 		 @FormParam("email") String email,
 		 @FormParam("firstName") String firstName,
 		 @FormParam("lastName") String lastName,
@@ -55,9 +77,48 @@ public class User_Service
 		 @FormParam("expDate") String expDate,
 		 @FormParam("password") String password)
 	{
-		 String output = userObj.insertUsers(userName, email, firstName, lastName,cardNumber,cvv,expDate,password);
+		 String output = userObj.insertClient(userName, email, firstName, lastName,cardNumber,cvv,expDate,password);
 		return output;
 	}
+	
+	//=========== Adding a new Researcher ================================
+	
+	@POST
+	@Path("/Researcher")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertResearcher(@FormParam("userName") String userName,
+		 @FormParam("email") String email,
+		 @FormParam("firstName") String firstName,
+		 @FormParam("lastName") String lastName,
+		 @FormParam("cardNumber") String cardNumber,
+		 @FormParam("cvv") String cvv,
+		 @FormParam("expDate") String expDate,
+		 @FormParam("password") String password)
+	{
+		 String output = userObj.insertResearcher(userName, email, firstName, lastName,cardNumber,cvv,expDate,password);
+		return output;
+	}
+	
+	//=========== Adding a new Researcher ================================
+	
+	@POST
+	@Path("/Admin")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertAdmin(@FormParam("userName") String userName,
+		 @FormParam("email") String email,
+		 @FormParam("firstName") String firstName,
+		 @FormParam("lastName") String lastName,
+		 @FormParam("cardNumber") String cardNumber,
+		 @FormParam("cvv") String cvv,
+		 @FormParam("expDate") String expDate,
+		 @FormParam("password") String password)
+	{
+		 String output = userObj.insertAdmin(userName, email, firstName, lastName,cardNumber,cvv,expDate,password);
+		return output;
+	}
+	
 	
 	//=========== Updating Details of a given user ================================
 	

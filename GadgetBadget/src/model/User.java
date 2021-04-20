@@ -21,9 +21,11 @@ public class User {
 	     return con;
 	 }
 	
-	//=============insert User Method===============
+	//==========================================================================
 	
-	public String insertUsers(String userName,String email,String firstName,String lastName,String cardNumber,String CVV,String expDate,String password)
+	//=============insert Client Method===============
+	
+	public String insertClient(String userName,String email,String firstName,String lastName,String cardNumber,String CVV,String expDate,String password)
 	{
 		String output = "";
 		try
@@ -38,6 +40,9 @@ public class User {
 			String query = " insert into user(`userId`,`userName`,`email`,`firstName`,`lastName`,`cardNumber`,`CVV`,`expDate`,`password`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
+			String query2 = " insert into client values (LAST_INSERT_ID())";
+			PreparedStatement preparedStmt2 = con.prepareStatement(query2);
+			
 			// binding values
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(2, userName);
@@ -48,9 +53,11 @@ public class User {
 			preparedStmt.setInt(7, Integer.parseInt(CVV)); 
 			preparedStmt.setString(8, expDate); 
 			preparedStmt.setString(9, password); 
+			
 
 			//execute the statement
 			preparedStmt.execute();
+			preparedStmt2.execute();
 			con.close();
 			output = "Inserted successfully";
 		}
@@ -62,9 +69,106 @@ public class User {
 		return output;
 	}
 	
-	//=============Read all users Method===============
+	//=============insert Researcher Method===============
 	
-	public String readUsers()
+		public String insertResearcher(String userName,String email,String firstName,String lastName,String cardNumber,String CVV,String expDate,String password)
+		{
+			String output = "";
+			try
+			{
+				Connection con = connect();
+				if (con == null)
+				{
+					return "Error while connecting to the database";
+				}
+
+				// create a prepared statement
+				String query = " insert into user(`userId`,`userName`,`email`,`firstName`,`lastName`,`cardNumber`,`CVV`,`expDate`,`password`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+
+				String query2 = " insert into researcher values (LAST_INSERT_ID())";
+				PreparedStatement preparedStmt2 = con.prepareStatement(query2);
+				
+				// binding values
+				preparedStmt.setInt(1, 0);
+				preparedStmt.setString(2, userName);
+				preparedStmt.setString(3, email);
+				preparedStmt.setString(4, firstName);
+				preparedStmt.setString(5, lastName); 
+				preparedStmt.setInt(6, Integer.parseInt(cardNumber)); 
+				preparedStmt.setInt(7, Integer.parseInt(CVV)); 
+				preparedStmt.setString(8, expDate); 
+				preparedStmt.setString(9, password); 
+				
+
+				//execute the statement
+				preparedStmt.execute();
+				preparedStmt2.execute();
+				con.close();
+				output = "Inserted successfully";
+			}
+			catch (Exception e)
+			{
+				output = "Error while inserting";
+				System.err.println(e.getMessage());
+			}
+			return output;
+		}
+		
+		
+		//=============insert Admin Method===============
+		
+		public String insertAdmin(String userName,String email,String firstName,String lastName,String cardNumber,String CVV,String expDate,String password)
+		{
+			String output = "";
+			try
+			{
+				Connection con = connect();
+				if (con == null)
+				{
+					return "Error while connecting to the database";
+				}
+
+				// create a prepared statement
+				String query = " insert into user(`userId`,`userName`,`email`,`firstName`,`lastName`,`cardNumber`,`CVV`,`expDate`,`password`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+
+				String query2 = " insert into admin values (LAST_INSERT_ID())";
+				PreparedStatement preparedStmt2 = con.prepareStatement(query2);
+				
+				// binding values
+				preparedStmt.setInt(1, 0);
+				preparedStmt.setString(2, userName);
+				preparedStmt.setString(3, email);
+				preparedStmt.setString(4, firstName);
+				preparedStmt.setString(5, lastName); 
+				preparedStmt.setInt(6, Integer.parseInt(cardNumber)); 
+				preparedStmt.setInt(7, Integer.parseInt(CVV)); 
+				preparedStmt.setString(8, expDate); 
+				preparedStmt.setString(9, password); 
+				
+
+				//execute the statement
+				preparedStmt.execute();
+				preparedStmt2.execute();
+				con.close();
+				output = "Inserted successfully";
+			}
+			catch (Exception e)
+			{
+				output = "Error while inserting";
+				System.err.println(e.getMessage());
+			}
+			return output;
+		}
+		
+		
+		
+	//============================================================	
+	
+	//=============Read all Clients ===============
+	
+	public String readClients()
 	 {
 		 String output = "";
 		 try
@@ -76,7 +180,7 @@ public class User {
 		 
 		 // Prepare the html table to be displayed
 		 output = "<table border='1'><tr>"+
-		 "<th>User Name</th>" +
+		 "<th>Client Name</th>" +
 		 "<th>Email</th>" +
 		 "<th>First Name</th><th>Last Name</th>" +
 		 "<th>Card Number</th>" +
@@ -84,7 +188,7 @@ public class User {
 		 "<th>Expiration Date</th>" +
 		 "<th>Password</th></tr>";
 		
-		 String query = "select * from user";
+		 String query = "select * from user u ,client c where c.clientId=u.userId";
 		 Statement stmt = con.createStatement();
 		 ResultSet rs = stmt.executeQuery(query);
 		 
@@ -130,7 +234,146 @@ public class User {
 		 return output;
 	 }
 	
-	//=============Read details of a individual user Method===============
+	//=============Read all Researchers ===============
+	
+		public String readResearchers()
+		 {
+			 String output = "";
+			 try
+			 {
+				 Connection con = connect();
+			 if (con == null)
+			 {
+				 return "Error while connecting to the database for reading."; }
+			 
+			 // Prepare the html table to be displayed
+			 output = "<table border='1'><tr>"+
+			 "<th>Client Name</th>" +
+			 "<th>Email</th>" +
+			 "<th>First Name</th><th>Last Name</th>" +
+			 "<th>Card Number</th>" +
+			 "<th>CVV</th>" +
+			 "<th>Expiration Date</th>" +
+			 "<th>Password</th></tr>";
+			
+			 String query = "select * from user u ,researcher c where c.researcherId=u.userId";
+			 Statement stmt = con.createStatement();
+			 ResultSet rs = stmt.executeQuery(query);
+			 
+			 // iterate through the rows in the result set
+			 while (rs.next())
+			 {
+				 String userId = Integer.toString(rs.getInt("userId"));
+				 String userName = rs.getString("userName");
+				 String email = rs.getString("email");
+				 String firstName = rs.getString("firstName");
+				 String lastName = rs.getString("lastName");
+				 String CardNumber = rs.getString("CardNumber");
+				 String CVV = rs.getString("CVV");
+				 String expDate = rs.getString("expDate");
+				 String password = rs.getString("password");
+				 
+				 // Add into the html table
+				 output += "<td>" + userName + "</td>";
+				 output += "<td>" + email + "</td>";
+				 output += "<td>" + firstName + "</td>";
+				 output += "<td>" + lastName + "</td>";
+				 output += "<td>" + CardNumber + "</td>";
+				 output += "<td>" + CVV + "</td>";
+				 output += "<td>" + expDate + "</td>";
+				 output += "<td>" + password + "</td>";
+
+
+				 
+				 // buttons
+				 output +="<input name='userId' type='hidden' value='" + userId
+				 + "'>" + "</form></td></tr>";
+		 }
+			 con.close();
+			 
+			 // Complete the html table
+			 output += "</table>";
+		 }
+		 catch (Exception e)
+		 {
+			 output = "Error while reading Users.";
+			 System.err.println(e.getMessage());
+		 }
+			 return output;
+		 }
+	
+	
+		//=============Read all Admins ===============
+		
+			public String readAdmins()
+			 {
+				 String output = "";
+				 try
+				 {
+					 Connection con = connect();
+				 if (con == null)
+				 {
+					 return "Error while connecting to the database for reading."; }
+				 
+				 // Prepare the html table to be displayed
+				 output = "<table border='1'><tr>"+
+				 "<th>Client Name</th>" +
+				 "<th>Email</th>" +
+				 "<th>First Name</th><th>Last Name</th>" +
+				 "<th>Card Number</th>" +
+				 "<th>CVV</th>" +
+				 "<th>Expiration Date</th>" +
+				 "<th>Password</th></tr>";
+				
+				 String query = "select * from user u ,Admin c where c.adminId=u.userId";
+				 Statement stmt = con.createStatement();
+				 ResultSet rs = stmt.executeQuery(query);
+				 
+				 // iterate through the rows in the result set
+				 while (rs.next())
+				 {
+					 String userId = Integer.toString(rs.getInt("userId"));
+					 String userName = rs.getString("userName");
+					 String email = rs.getString("email");
+					 String firstName = rs.getString("firstName");
+					 String lastName = rs.getString("lastName");
+					 String CardNumber = rs.getString("CardNumber");
+					 String CVV = rs.getString("CVV");
+					 String expDate = rs.getString("expDate");
+					 String password = rs.getString("password");
+					 
+					 // Add into the html table
+					 output += "<td>" + userName + "</td>";
+					 output += "<td>" + email + "</td>";
+					 output += "<td>" + firstName + "</td>";
+					 output += "<td>" + lastName + "</td>";
+					 output += "<td>" + CardNumber + "</td>";
+					 output += "<td>" + CVV + "</td>";
+					 output += "<td>" + expDate + "</td>";
+					 output += "<td>" + password + "</td>";
+
+
+					 
+					 // buttons
+					 output +="<input name='userId' type='hidden' value='" + userId
+					 + "'>" + "</form></td></tr>";
+			 }
+				 con.close();
+				 
+				 // Complete the html table
+				 output += "</table>";
+			 }
+			 catch (Exception e)
+			 {
+				 output = "Error while reading Users.";
+				 System.err.println(e.getMessage());
+			 }
+				 return output;
+			 }	
+	
+		
+		
+	//=============Read details of a individual User Method===============
 	
 	public String readUserDetails(String userName,String password)
 	 {
