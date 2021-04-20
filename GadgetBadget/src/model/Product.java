@@ -193,7 +193,7 @@ public class Product {
 	 	return output; 
 	 }
 	
-	public String viewSelectCart(String orderId) {
+	public String viewSelectCart(int orderId) {
 			
 			String output = "";
 			try {
@@ -213,8 +213,7 @@ public class Product {
 						 "<th>Update</th>" +
 						 "<th>Remove</th></tr>"; 
 				System.out.print("hellosecond");
-				int oID = Integer.parseInt(orderId);
-				String query = "SELECT * FROM `order` where orderId='"+oID+"'";
+				String query = "SELECT * FROM `order` where orderId=" +orderId ;
 				Statement stmt = con.createStatement(); 
 				ResultSet rs = stmt.executeQuery(query); 
 				

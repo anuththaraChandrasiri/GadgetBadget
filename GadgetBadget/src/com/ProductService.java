@@ -32,19 +32,22 @@ public class ProductService {
 	 
 	 }
 	
-//	@GET
-//	@Path("/") 
-//	@Produces(MediaType.TEXT_HTML) 
-//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//	
+	@GET
+	@Path("/CartItem/{orderId}") 
+	@Produces(MediaType.TEXT_HTML) 
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public String viewSelectCart(@PathParam("orderId") int orderId){
+		
+		return obPro.viewSelectCart(orderId);
+	}
 //	
 //	public String viewSelectCart(String orderId) 
 //	 { 
 //		
 //	 return obPro.viewSelectCart(orderId);
 //	 
+//	 
 //	 }
-	
 	
 	
 	@POST
