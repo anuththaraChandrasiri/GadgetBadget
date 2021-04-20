@@ -1,5 +1,5 @@
 package com;
-import model.Product;  
+import model.Product;   
 
 import java.sql.Date;
 import java.sql.Time;
@@ -31,6 +31,21 @@ public class ProductService {
 	 return obPro.viewCart();
 	 
 	 }
+	
+//	@GET
+//	@Path("/") 
+//	@Produces(MediaType.TEXT_HTML) 
+//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//	
+//	
+//	public String viewSelectCart(String orderId) 
+//	 { 
+//		
+//	 return obPro.viewSelectCart(orderId);
+//	 
+//	 }
+	
+	
 	
 	@POST
 	@Path("/") 
@@ -77,15 +92,14 @@ public class ProductService {
 	@Consumes(MediaType.APPLICATION_XML) 
 	@Produces(MediaType.TEXT_PLAIN) 
 	
-	public String deleteCartItem(String itemData) 
-	{  
+	public String deleteItem(String productData) 
+	{ 
 	//Convert the input string to an XML document
-	 Document doc = Jsoup.parse(itemData, "", Parser.xmlParser()); 
+	 Document doc = Jsoup.parse(productData, "", Parser.xmlParser()); 
 	 
-	//Read the value<orderId>
+	//Read the value from the element <itemID>
 	 String orderId = doc.select("orderId").text(); 
-	 String output = obPro.deleteCartItem(orderId); 
-	 System.out.print(orderId);
+	 String output = obPro.deleteItem(orderId); 
 	return output; 
 	}
 
