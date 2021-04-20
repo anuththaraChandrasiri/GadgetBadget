@@ -13,7 +13,7 @@ public class Fund {
 		Connection con = null;
 		 try
 		 {
-			 Class.forName("com.mysql.jdbc.Driver");
+			 Class.forName("com.mysql.cj.jdbc.Driver");
 		
 			 //Provide the correct details: DBServer/DBName, username, password
 			 con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/gadget_badget", "root", "");
@@ -27,7 +27,7 @@ public class Fund {
 		 return con;
 	 }
 	
-	 public String insertFundData(String pId , String resId , String cliId , String amount) {
+	 public String insertFundData(String pId , String researcherId , String clientId , String amount) {
 		 
 		 String output = "";
 		 
@@ -43,7 +43,7 @@ public class Fund {
 			 
 				 
 				 //create query
-				 String query = " insert into fund (`fundId`,`pId`,`researcherId`,`clientId`,`amount`) " + "values (?,?,?,?,?)" ;
+				 String query = "INSERT INTO fund(`fundId`,`pId`,`researcherId`,`clientId`,`amount`) VALUES (?,?,?,?,?)" ;
 				 
 				 //create prepared statement
 				 PreparedStatement pstmt = con.prepareStatement(query);
@@ -51,8 +51,8 @@ public class Fund {
 				 //binding values
 				 pstmt.setInt(1,0);
 				 pstmt.setInt(2,Integer.parseInt(pId));
-				 pstmt.setInt(3,Integer.parseInt(resId));
-				 pstmt.setInt(4,Integer.parseInt(cliId));
+				 pstmt.setInt(3,Integer.parseInt(researcherId));
+				 pstmt.setInt(4,Integer.parseInt(clientId));
 				 pstmt.setFloat(5,Float.parseFloat(amount));
 				 
 				 //execute query
@@ -160,7 +160,7 @@ public class Fund {
 				return "Error while connecting to database";
 			}
 			
-			String query = "delete from fund where fundId = ?";
+			String query = "delete from fund where fundId =?";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			
@@ -186,6 +186,37 @@ public class Fund {
 	public String updateFund(String fId , String pId , String resId , String cliId , String amount) {
 		
 		String output = "";
+		
+		try {
+			
+			Connection con = connect();
+			
+			if(con == null) {
+				
+				
+				return "Error connecting to database";
+			}
+			
+			String query = "update fund set amount=? where fundId=? ";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			//binding values
+			preparedStmt.setFloat(1,Float.parseFloat(amount));
+			preparedStmt.setInt(2, Integer.parseInt(fId));
+			
+			 // execute the statement
+			 preparedStmt.execute();
+			 con.close();
+			 output = "Updated successfully";
+			
+			
+		}catch(Exception e) {
+			
+			output = "Error while updating the item.";
+			System.err.println(e.getMessage());
+			 
+		}
 		
 		
 		return output;
