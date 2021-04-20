@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class Research {
+public class Project {
 	
 	private Connection connect()
 	 {
@@ -26,7 +26,7 @@ public class Research {
 	 }
 //========================================================================================================
 	
-	public String insertFinishedResearch(String reasearcherID, String topic, String status, String price)
+	public String insertFinishedProject(String reasearcherID, String topic, String status, String price)
 	{
 		String output = "";
 		
@@ -71,7 +71,7 @@ public class Research {
 	 }
 //=============================================================================================================
 	
-	public String insertUnfinishedResearch(String researcherID, String topic, String status, String amount)
+	public String insertUnfinishedProject(String researcherID, String topic, String status, String amount)
 	{
 		String output = "";
 		
@@ -116,7 +116,7 @@ public class Research {
 	 }
 //===================================================================================================	
 	
-	public String deleteResearch(String projectID)
+	public String deleteProject(String projectID)
 	{
 		String output = "";
 		
@@ -153,7 +153,7 @@ public class Research {
 	 }
 //================================================================================================================================
 	
-	public String updateFinishedResearch(String projectID , String topic, String amount , String researcherID)
+	public String updateFinishedProject(String projectID , String topic, String amount , String researcherID)
 	{
 		String output = "";
 		
@@ -197,7 +197,7 @@ public class Research {
 	 }
 //=======================================================================================================================================
 	
-	public String updateUnfinishedResearch(String projectID , String topic, String amount , String researcherID)
+	public String updateUnfinishedProject(String projectID , String topic, String amount , String researcherID)
 	{
 		String output = "";
 		
@@ -241,7 +241,7 @@ public class Research {
 	 }
 //============================================================================================================================================
 	
-	public String readFinishedResearches(String researcherID)
+	public String readFinishedProjects(String researcherID)
 	{
 		String  output = "<table border='1'><tr><th>ProjectID</th><th>Project Name</th>" +
 				 "<th>Project Price</th>" +
@@ -310,7 +310,7 @@ public class Research {
 			 return output;
 	 }
 	
-	public String readUnfinishedResearches(String researcherID)
+	public String readUnfinishedProjects(String researcherID)
 	{
 		String  output = "<table border='1'><tr><th>ProjectID</th><th>Project Name</th>" +
 				 "<th>Funds Required</th>" +
