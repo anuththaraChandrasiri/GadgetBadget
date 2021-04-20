@@ -2,9 +2,12 @@ package com;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Progress {
 
@@ -62,7 +65,7 @@ public class Progress {
 			
 		}catch(Exception e) {
 			
-			output = "Error while inserting the details..";
+			output = "Error while inserting the progress details..";
 			System.err.println(e.getMessage());
 			
 		}
@@ -101,7 +104,7 @@ public class Progress {
 			
 		}catch(Exception e) {
 			
-			output = "Error while deleting the details..";
+			output = "Error while deleting the progress details..";
 			System.err.println(e.getMessage());
 			
 		}
@@ -109,7 +112,7 @@ public class Progress {
 		return output;
 	}
 	
-	public String updateProgressDetails() {
+	public String updateProgressDetails(String progressId , String fundId , String pId , String researcherId , String clientId , String doc , String status ) {
 		
 		String output = "";
 		
@@ -122,8 +125,104 @@ public class Progress {
 				return "Error while connecting to database";
 			}
 			
+			String query = "update progress set status=?  where progressId=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			preparedStmt.setString(1,status);
+			preparedStmt.setInt(2, Integer.parseInt(progressId));
+			
+			// execute the statement
+			preparedStmt.executeUpdate();
+			con.close();
+			
+			output = "Updated successfully";
+			
+			
 		}catch(Exception e) {
 			
+			output = "Error while updating the progress details..";
+			System.err.println(e.getMessage());
+			
+		}
+		
+		return output;
+	}
+	
+	public String readProgressDetails() {
+		
+		String output = "";
+
+		try {
+			
+			Connection con = connect();
+			
+			if(con == null) {
+				
+				return "Error while connecting to database";
+			}
+			
+			// Prepare the html table to be displayed
+			output ="<table border='1'>"+
+					"<tr>"+
+					"<th>Progress ID</th>"+
+					"<th>Fund ID</th>"+
+					"<th>PID</th>"+
+					"<th>Research Name</th>" +
+					"<th>Client ID</th>" +
+					"<th>Document</th>" +
+					"<th>Status</th>"+
+					"<th>Update</th>"+
+					"<th>Delete</th>"
+					+"</tr>";
+			
+			String query = "select * from progress";
+			
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			
+			// iterate through the rows in the result set					
+			while (rs.next())
+			{
+				
+				int prgID = rs.getInt("progressId");
+				int fID = rs.getInt("fundId");
+				int pID = rs.getInt("pId");
+				int rID = rs.getInt("researcherId");
+				int cID = rs.getInt("clientId");
+				InputStream document = rs.getBinaryStream("document");
+				String status = rs.getString("status");
+				
+				// Add into the html table
+				output += "<tr><td>" + prgID + "</td>";
+				output += "<td>" + fID + "</td>";
+				output += "<td>" + pID + "</td>";
+				output += "<td>" + rID + "</td>";
+				output += "<td>" + cID + "</td>";
+				output += "<td>" + document + "</td>";
+				output += "<td>" + status + "</td>";
+				
+				// buttons
+				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
+						+ "<td><form method='post' action='items.jsp'>"
+						+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
+						+ "<input name='itemID' type='hidden' value='" + fID
+						+ "'>" 
+						+ "</form></td></tr>";
+				
+			}
+			
+				con.close();
+				
+				// Complete the html table
+				output += "</table>";
+			
+			
+			
+		}catch(Exception e) {
+			
+			output = "Error while reading the progress details..";
+			System.err.println(e.getMessage());
 			
 		}
 		
