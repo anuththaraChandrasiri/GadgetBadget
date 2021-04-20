@@ -54,8 +54,8 @@ public class Fund_Services {
 		 Document doc = Jsoup.parse(fundData, "", Parser.xmlParser());
 		
 		 //Read the value from the element <fundId>
-		 String itemID = doc.select("fundId").text();
-		 String output = fundObj.deleteFund(itemID); 
+		 String fundId = doc.select("fundId").text();
+		 String output = fundObj.deleteFund(fundId); 
 		 
 		 return output;
 	}
