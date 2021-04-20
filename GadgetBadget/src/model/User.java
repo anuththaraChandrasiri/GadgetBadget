@@ -21,6 +21,8 @@ public class User {
 	     return con;
 	 }
 	
+	//=============insert User Method===============
+	
 	public String insertUsers(String userName,String email,String firstName,String lastName,String cardNumber,String CVV,String expDate,String password)
 	{
 		String output = "";
@@ -60,6 +62,7 @@ public class User {
 		return output;
 	}
 	
+	//=============Read all users Method===============
 	
 	public String readUsers()
 	 {
@@ -99,20 +102,19 @@ public class User {
 			 String password = rs.getString("password");
 			 
 			 // Add into the html table
+			 output += "<td>" + userName + "</td>";
+			 output += "<td>" + email + "</td>";
 			 output += "<td>" + firstName + "</td>";
 			 output += "<td>" + lastName + "</td>";
-			 output += "<td>" + userName + "</td>";
-			 output += "<td>" + password + "</td>";
-			 output += "<td>" + email + "</td>";
 			 output += "<td>" + CardNumber + "</td>";
 			 output += "<td>" + CVV + "</td>";
 			 output += "<td>" + expDate + "</td>";
+			 output += "<td>" + password + "</td>";
+
+
 			 
 			 // buttons
-			 output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
-			 + "<td><form method='post' action='items.jsp'>"
-			 + "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
-			 + "<input name='userId' type='hidden' value='" + userId
+			 output +="<input name='userId' type='hidden' value='" + userId
 			 + "'>" + "</form></td></tr>";
 	 }
 		 con.close();
@@ -128,9 +130,9 @@ public class User {
 		 return output;
 	 }
 	
+	//=============Read details of a individual user Method===============
 	
-	
-	public String readUserDetails(int userId)
+	public String readUserDetails(String userName,String password)
 	 {
 		 String output = "";
 		 try
@@ -151,7 +153,7 @@ public class User {
 		 "<th>Expiration Date</th>" +
 		 "<th>Password</th></tr>";
 		
-		 String query = "select * from user where userId = " + userId;
+		 String query = "select * from user where userName = '" + userName +"' AND password = '" + password + "'";
 		 Statement stmt = con.createStatement();
 		 ResultSet rs = stmt.executeQuery(query);
 		 
@@ -159,24 +161,24 @@ public class User {
 		 while (rs.next())
 		 {
 			 String userID = Integer.toString(rs.getInt("userId"));
-			 String userName = rs.getString("userName");
+			 String username = rs.getString("username");
 			 String email = rs.getString("email");
 			 String firstName = rs.getString("firstName");
 			 String lastName = rs.getString("lastName");
 			 String CardNumber = rs.getString("CardNumber");
 			 String CVV = rs.getString("CVV");
 			 String expDate = rs.getString("expDate");
-			 String password = rs.getString("password");
+			 String passWord = rs.getString("passWord");
 			 
 			 // Add into the html table
-			 output += "<td>" + userName + "</td>";
+			 output += "<td>" + username + "</td>";
 			 output += "<td>" + email + "</td>";
 			 output += "<td>" + firstName + "</td>";
 			 output += "<td>" + lastName + "</td>";
-			 output += "<td>" + password + "</td>";
 			 output += "<td>" + CardNumber + "</td>";
 			 output += "<td>" + CVV + "</td>";
 			 output += "<td>" + expDate + "</td>";
+			 output += "<td>" + passWord + "</td>";
 			 
 	 }
 		 con.close();
@@ -192,7 +194,7 @@ public class User {
 		 return output;
 	 }
 	
-	
+	//=============Updating an User Method===============
 
 	public String updateUser(String userId,String fname, String lname, String uname, String email,String cnumber,String CVV,String expdate,String password)
 	{
@@ -231,6 +233,7 @@ public class User {
 		 	return output;
 		 }
 	
+	//=============Deleting User Method===============
 	
 	public String deleteUser(String userId)
 	 {

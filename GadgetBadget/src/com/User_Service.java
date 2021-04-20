@@ -19,6 +19,7 @@ public class User_Service
 {
 	User userObj = new User();
 	
+	//=========== Reading Details of All users ================================
 	
 	@GET
 	@Path("/")
@@ -28,13 +29,18 @@ public class User_Service
 		return userObj.readUsers();
 	}
 	
-	@GET
-	@Path("/User/{userId}")
-	@Produces(MediaType.TEXT_HTML)
-	public String readUserDetails(@PathParam("userId") int userId){
+	//=========== Reading Details of a specific User for login ================================
 	
-		return userObj.readUserDetails(userId);
+	@GET
+	@Path("/User/{userName}/Password/{password}")
+	@Produces(MediaType.TEXT_HTML)
+	public String userLogin(@PathParam("userName") String userName,
+			@PathParam("password") String password){
+	
+		return userObj.readUserDetails(userName,password);
 	}
+	
+	//=========== Adding a new user ================================
 	
 	@POST
 	@Path("/User")
@@ -53,6 +59,7 @@ public class User_Service
 		return output;
 	}
 	
+	//=========== Updating Details of a given user ================================
 	
 	@PUT
 	@Path("/")
@@ -79,6 +86,8 @@ public class User_Service
 	
 		 return output;
 	}
+	
+	//=========== Deleting Details of a given user ================================
 	
 	@DELETE
 	@Path("/")
