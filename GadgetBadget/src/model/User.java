@@ -1,5 +1,6 @@
 package model;
 
+import java.math.BigInteger;
 import java.sql.*;
 
 public class User {
@@ -49,7 +50,7 @@ public class User {
 			preparedStmt.setString(3, email);
 			preparedStmt.setString(4, firstName);
 			preparedStmt.setString(5, lastName); 
-			preparedStmt.setInt(6, Integer.parseInt(cardNumber)); 
+			preparedStmt.setLong(6, Long.parseLong(cardNumber));
 			preparedStmt.setInt(7, Integer.parseInt(CVV)); 
 			preparedStmt.setString(8, expDate); 
 			preparedStmt.setString(9, password); 
@@ -89,13 +90,14 @@ public class User {
 				String query2 = " insert into researcher values (LAST_INSERT_ID())";
 				PreparedStatement preparedStmt2 = con.prepareStatement(query2);
 				
+				
 				// binding values
 				preparedStmt.setInt(1, 0);
 				preparedStmt.setString(2, userName);
 				preparedStmt.setString(3, email);
 				preparedStmt.setString(4, firstName);
 				preparedStmt.setString(5, lastName); 
-				preparedStmt.setInt(6, Integer.parseInt(cardNumber)); 
+				preparedStmt.setLong(6, Long.parseLong(cardNumber)); 
 				preparedStmt.setInt(7, Integer.parseInt(CVV)); 
 				preparedStmt.setString(8, expDate); 
 				preparedStmt.setString(9, password); 
@@ -142,7 +144,7 @@ public class User {
 				preparedStmt.setString(3, email);
 				preparedStmt.setString(4, firstName);
 				preparedStmt.setString(5, lastName); 
-				preparedStmt.setInt(6, Integer.parseInt(cardNumber)); 
+				preparedStmt.setLong(6, Long.parseLong(cardNumber)); 
 				preparedStmt.setInt(7, Integer.parseInt(CVV)); 
 				preparedStmt.setString(8, expDate); 
 				preparedStmt.setString(9, password); 
@@ -180,6 +182,7 @@ public class User {
 		 
 		 // Prepare the html table to be displayed
 		 output = "<table border='1'><tr>"+
+		 "<th>User ID</th>" +
 		 "<th>Client User Name</th>" +
 		 "<th>Email</th>" +
 		 "<th>First Name</th><th>Last Name</th>" +
@@ -206,6 +209,7 @@ public class User {
 			 String password = rs.getString("password");
 			 
 			 // Add into the html table
+			 output += "<td>" + userId + "</td>";
 			 output += "<td>" + userName + "</td>";
 			 output += "<td>" + email + "</td>";
 			 output += "<td>" + firstName + "</td>";
@@ -249,6 +253,7 @@ public class User {
 			 
 			 // Prepare the html table to be displayed
 			 output = "<table border='1'><tr>"+
+			 "<th>User ID</th>" +
 			 "<th>Researcher User Name</th>" +
 			 "<th>Email</th>" +
 			 "<th>First Name</th><th>Last Name</th>" +
@@ -275,6 +280,7 @@ public class User {
 				 String password = rs.getString("password");
 				 
 				 // Add into the html table
+				 output += "<td>" + userId + "</td>";
 				 output += "<td>" + userName + "</td>";
 				 output += "<td>" + email + "</td>";
 				 output += "<td>" + firstName + "</td>";
@@ -318,6 +324,7 @@ public class User {
 				 
 				 // Prepare the html table to be displayed
 				 output = "<table border='1'><tr>"+
+				 "<th>User ID</th>" +
 				 "<th>Admin User Name</th>" +
 				 "<th>Email</th>" +
 				 "<th>First Name</th><th>Last Name</th>" +
@@ -344,6 +351,7 @@ public class User {
 					 String password = rs.getString("password");
 					 
 					 // Add into the html table
+					 output += "<td>" + userId + "</td>";
 					 output += "<td>" + userName + "</td>";
 					 output += "<td>" + email + "</td>";
 					 output += "<td>" + firstName + "</td>";
@@ -389,14 +397,14 @@ public class User {
 		 
 		 // Prepare the html table to be displayed
 		 output = "<table border='1'><tr>"+
-		 "<th>User Name</th>" +
-		 "<th>Email</th>" +
-		 "<th>First Name</th>"+
-		 "<th>Last Name</th>" +
-		 "<th>Card Number</th>" +
-		 "<th>CVV</th>" +
-		 "<th>Expiration Date</th>" +
-		 "<th>Password</th></tr>";
+				 "<th>User ID</th>" +
+				 "<th>User Name</th>" +
+				 "<th>Email</th>" +
+				 "<th>First Name</th><th>Last Name</th>" +
+				 "<th>Card Number</th>" +
+				 "<th>CVV</th>" +
+				 "<th>Expiration Date</th>" +
+				 "<th>Password</th></tr>";
 		
 		 String query = "select * from user where userName = '" + userName +"' AND password = '" + password + "'";
 		 Statement stmt = con.createStatement();
@@ -405,17 +413,18 @@ public class User {
 		 // iterate through the rows in the result set
 		 while (rs.next())
 		 {
-			 String userID = Integer.toString(rs.getInt("userId"));
-			 String username = rs.getString("username");
+			 String userId = Integer.toString(rs.getInt("userId"));
+			 String username = rs.getString("userName");
 			 String email = rs.getString("email");
 			 String firstName = rs.getString("firstName");
 			 String lastName = rs.getString("lastName");
 			 String CardNumber = rs.getString("CardNumber");
 			 String CVV = rs.getString("CVV");
 			 String expDate = rs.getString("expDate");
-			 String passWord = rs.getString("passWord");
+			 String passWord = rs.getString("password");
 			 
 			 // Add into the html table
+			 output += "<td>" + userId + "</td>";
 			 output += "<td>" + username + "</td>";
 			 output += "<td>" + email + "</td>";
 			 output += "<td>" + firstName + "</td>";
@@ -424,7 +433,12 @@ public class User {
 			 output += "<td>" + CVV + "</td>";
 			 output += "<td>" + expDate + "</td>";
 			 output += "<td>" + passWord + "</td>";
+
+
 			 
+			 // buttons
+			 output +="<input name='userId' type='hidden' value='" + userId
+			 + "'>" + "</form></td></tr>";
 	 }
 		 con.close();
 		 
@@ -462,7 +476,7 @@ public class User {
 			 preparedStmt.setString(2, email);
 		 	 preparedStmt.setString(3, fname);
 			 preparedStmt.setString(4, lname);
-			 preparedStmt.setInt(5, Integer.parseInt(cnumber));
+			 preparedStmt.setLong(5, Long.parseLong(cnumber));
 			 preparedStmt.setInt(6, Integer.parseInt(CVV));
 			 preparedStmt.setString(7, expdate);
 			 preparedStmt.setString(8, password);
