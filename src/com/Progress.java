@@ -30,7 +30,7 @@ public class Progress {
 		 return con;
 	 }
 	
-	public String insertProgressDetails(String fundId , String pId , String researcherId , String clientId , String doc , String status ) {
+	public String insertProgressDetails(int fundId , int pId , int researcherId , int clientId , InputStream  doc , String status ) {
 		
 		String output = "";
 		
@@ -50,16 +50,14 @@ public class Progress {
 			 
 			 //binding values
 			 pstmt.setInt(1,0);
-			 pstmt.setInt(2,Integer.parseInt(fundId));
-			 pstmt.setInt(3,Integer.parseInt(pId));
-			 pstmt.setInt(4,Integer.parseInt(researcherId));
-			 pstmt.setInt(5,Integer.parseInt(clientId));
+			 pstmt.setInt(2,(fundId));
+			 pstmt.setInt(3,(pId));
+			 pstmt.setInt(4,(researcherId));
+			 pstmt.setInt(5,(clientId));
+			 			 
+			 //FileInputStream input = new FileInputStream(doc);
 			 
-			 File file = new File(doc);
-			 
-			 FileInputStream input = new FileInputStream(file);
-			 
-			 pstmt.setBinaryStream(6,input);
+			 //pstmt.setBinaryStream(6,doc);
 			 
 			 pstmt.setString(7,status);
 			

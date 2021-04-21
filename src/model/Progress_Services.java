@@ -1,5 +1,8 @@
 package model;
 
+import java.io.File;
+import java.io.InputStream;
+
 //For REST Service
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,12 +26,12 @@ public class Progress_Services {
 	@POST
 	@Path("/insertprogress")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String insertProgress(@FormParam("fundId") String fId,
-							 @FormParam("pId") String pId,
-							 @FormParam("reseacherId") String rId,
-							 @FormParam("clientId") String cId,
-							 @FormParam("document") String doc,
+	@Produces(MediaType.MULTIPART_FORM_DATA)
+	public String insertProgress(@FormParam("fundId") int fId,
+							 @FormParam("pId") int pId,
+							 @FormParam("reseacherId") int rId,
+							 @FormParam("clientId") int cId,
+							 @FormParam("document") InputStream  doc,
 							 @FormParam("status") String status)
 	{
 			
