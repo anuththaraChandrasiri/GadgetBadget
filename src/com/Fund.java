@@ -27,52 +27,53 @@ public class Fund {
 		 return con;
 	 }
 	
-	 public String insertFundData(String pId , String researcherId , String clientId , String amount) {
-		 
-		 String output = "";
-		 
-		 try {
+	public String insertFund(int pId , int researcherId , int clientId , float amount) {
 			 
-			 //connect to database
-			 Connection con = connect();
+			 String output = "";
 			 
-			 if(con == null) {
+			 try {
 				 
-				 return "Error while connectiong to database";
+				 //connect to database
+				 Connection con = connect();
+				 
+				 if(con == null) {
+					 
+					 return "Error while connectiong to database";
+				 }
+				 
+					 
+					 //create query
+					 String query = "INSERT INTO fund(`fundId`,`pId`,`researcherId`,`clientId`,`amount`) VALUES (? ,? ,? ,? ,? )" ;
+					 
+					 //create prepared statement
+					 PreparedStatement pstmt = con.prepareStatement(query);
+					 
+					 //binding values
+					 pstmt.setInt(1,0);
+					 pstmt.setInt(2,pId);
+					 pstmt.setInt(3,researcherId);
+					 pstmt.setInt(4,clientId);
+					 pstmt.setFloat(5,amount);
+					 
+					 //execute query
+					 pstmt.executeUpdate();
+					 
+					 //close connection with database
+					 con.close();
+					 
+					 output = "Inserted Sucessfully";
+					 	 
+			 }catch(Exception e) {
+				 
+				 output = "Error while inserting the item.";
+				 System.err.println(e.getMessage());
+				 
 			 }
-			 
-				 
-				 //create query
-				 String query = "INSERT INTO fund(`fundId`,`pId`,`researcherId`,`clientId`,`amount`) VALUES (?,?,?,?,?)" ;
-				 
-				 //create prepared statement
-				 PreparedStatement pstmt = con.prepareStatement(query);
-				 
-				 //binding values
-				 pstmt.setInt(1,0);
-				 pstmt.setInt(2,Integer.parseInt(pId));
-				 pstmt.setInt(3,Integer.parseInt(researcherId));
-				 pstmt.setInt(4,Integer.parseInt(clientId));
-				 pstmt.setFloat(5,Float.parseFloat(amount));
-				 
-				 //execute query
-				 pstmt.execute();
-				 
-				 //close connection with database
-				 con.close();
-				 
-				 output = "Inserted Sucessfully";
-				 	 
-		 }catch(Exception e) {
-			 
-			 output = "Error while inserting the item.";
-			 System.err.println(e.getMessage());
-			 
+			
+			 return output;
 		 }
 		
-		 return output;
-	 }
-	
+	 
 	public String listFunds() {
 		
 		String output = "";

@@ -21,10 +21,10 @@ public class Progress_Services {
 	
 	//(`progressId`, `fundId`, `pId`, `researcherId`, `clientId`, `document`, `status`)
 	@POST
-	@Path("/insertfund")
+	@Path("/insertprogress")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertItem(@FormParam("fundId") String fId,
+	public String insertProgress(@FormParam("fundId") String fId,
 							 @FormParam("pId") String pId,
 							 @FormParam("reseacherId") String rId,
 							 @FormParam("clientId") String cId,
@@ -38,9 +38,9 @@ public class Progress_Services {
 	}
 	
 	@GET
-	@Path("/readfunds")
+	@Path("/readprogress")
 	@Produces(MediaType.TEXT_HTML)
-	public String fundList()
+	public String readProgressDetails()
 	{
 	
 		return progressobj.readProgressDetails();
@@ -50,7 +50,7 @@ public class Progress_Services {
 	@Path("/deleteprogress")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteFund(String progData)
+	public String deleteProgress(String progData)
 	{
 		
 		 //Convert the input string to an XML document
@@ -67,7 +67,7 @@ public class Progress_Services {
 	@Path("/updateprogress")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateFund(String itemData)
+	public String updateprogress(String itemData)
 	{
 		
 		 //(`progressId`, `fundId`, `pId`, `researcherId`, `clientId`, `document`, `status`)
@@ -80,10 +80,9 @@ public class Progress_Services {
 		 String pid = itemObject.get("pId").getAsString();
 		 String rid = itemObject.get("researcherId").getAsString();
 		 String cid = itemObject.get("clientId").getAsString();
-		 String doc = itemObject.get("document").getAsString();
 		 String stat = itemObject.get("status").getAsString();
 		 
-		 String output = progressobj.updateProgressDetails(prid, fid, pid, rid, cid, doc, stat);
+		 String output = progressobj.updateProgressDetails(prid, fid, pid, rid, cid, stat);
 	 
 	 return output;
 	}

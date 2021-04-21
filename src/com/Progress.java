@@ -112,7 +112,7 @@ public class Progress {
 		return output;
 	}
 	
-	public String updateProgressDetails(String progressId , String fundId , String pId , String researcherId , String clientId , String doc , String status ) {
+	public String updateProgressDetails(String progressId , String fundId , String pId , String researcherId , String clientId , String status ) {
 		
 		String output = "";
 		
@@ -173,8 +173,8 @@ public class Progress {
 					"<th>Document</th>" +
 					"<th>Status</th>"+
 					"<th>Update</th>"+
-					"<th>Delete</th>"
-					+"</tr>";
+					"<th>Delete</th>"+
+					"</tr>";
 			
 			String query = "select * from progress";
 			
@@ -184,6 +184,8 @@ public class Progress {
 			// iterate through the rows in the result set					
 			while (rs.next())
 			{
+				
+				//(`progressId`, `fundId`, `pId`, `researcherId`, `clientId`, `document`, `status`)
 				
 				int prgID = rs.getInt("progressId");
 				int fID = rs.getInt("fundId");
@@ -199,7 +201,7 @@ public class Progress {
 				output += "<td>" + pID + "</td>";
 				output += "<td>" + rID + "</td>";
 				output += "<td>" + cID + "</td>";
-				output += "<td>" + document + "</td>";
+				output += "<td>" + document.toString() + "</td>";
 				output += "<td>" + status + "</td>";
 				
 				// buttons

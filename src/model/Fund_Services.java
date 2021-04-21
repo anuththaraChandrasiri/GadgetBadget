@@ -19,17 +19,18 @@ public class Fund_Services {
 	
 	Fund fundObj = new Fund(); 
 	
+	
 	@POST
 	@Path("/insertfund")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertItem(@FormParam("pId") String pId,
-							 @FormParam("reseacherId") String reseacherId,
-							 @FormParam("clientId") String clientId,
-							 @FormParam("amount") String amount)
+	public String insertFund(@FormParam("pId") int pId,
+							 @FormParam("reseacherId") int reseacherId,
+							 @FormParam("clientId") int clientId,
+							 @FormParam("amount") float amount)
 	{
 			
-		String output = fundObj.insertFundData(pId, reseacherId, clientId, amount);
+		String output = fundObj.insertFund(pId, reseacherId, clientId, amount);
 		
 		return output;
 	}
