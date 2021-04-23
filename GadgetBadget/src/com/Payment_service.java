@@ -22,7 +22,7 @@ public class Payment_service {
 	//User payment details-------------------------------------------------------------------------------------------------------------------------
 	
 	@GET
-	@Path("/User")
+	@Path("/Users")
 	@Produces(MediaType.TEXT_HTML)
 	public String readPaymentDetails(){
 	
@@ -30,7 +30,7 @@ public class Payment_service {
 	}	
 	
 	@GET
-	@Path("/User/{userId}")
+	@Path("/Users/User/{userId}")
 	@Produces(MediaType.TEXT_HTML)
 	public String readUserPaymentDetails(@PathParam("userId") int userId){
 	
@@ -38,7 +38,7 @@ public class Payment_service {
 	}	
 	
 	@PUT
-	@Path("/User")
+	@Path("/Users/User")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updateUserPaymentDetailsRecord(String paymentDetailsData)

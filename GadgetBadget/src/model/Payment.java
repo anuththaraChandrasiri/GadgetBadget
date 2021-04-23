@@ -47,12 +47,11 @@ public class Payment {
 			output = "<table border = '1'>"
 					+ "<tr><th>User ID</th>"
 					+ "<th>Name</th>"
-					+ "<th>Email</th>"
 					+ "<th>Card number</th>"
 					+ "<th>CVV</th>"
 					+ "<th>Expiration date</th><tr>";
 				
-			String query = "select userId, firstName, lastName, email, cardNumber, CVV, expDate from user";
+			String query = "select userId, firstName, lastName, cardNumber, CVV, expDate from user";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 						
@@ -62,7 +61,6 @@ public class Payment {
 				Integer userID = rs.getInt("userId");
 				String Fname = rs.getString("firstName");
 				String Lname = rs.getString("lastName");
-				String email = rs.getString("email");
 				String cardNumber = rs.getString("cardNumber");
 				Integer CVV = rs.getInt("CVV");
 				String expDate = rs.getString("expDate");
@@ -71,7 +69,6 @@ public class Payment {
 				// Add into the HTML table
 				output += "<tr><td>" + userID + "</td>";
 				output += "<td>" + name + "</td>";
-				output += "<td>" + email + "</td>";
 				output += "<td>" + cardNumber + "</td>";
 				output += "<td>" + CVV + "</td>";
 				output += "<td>" + expDate + "</td>";
@@ -107,13 +104,12 @@ public class Payment {
 			output = "<table border = '1'>"
 					+ "<tr><th>User ID</th>"
 					+ "<th>Name</th>"
-					+ "<th>Email</th>"
 					+ "<th>Card number</th>"
 					+ "<th>CVV</th>"
 					+ "<th>Expiration date</th>"
 					+ "<th>Action</th><tr>";
 					
-			String query = "select userId, firstName, lastName, email, cardNumber, CVV, expDate from user where userId = " + userId;
+			String query = "select userId, firstName, lastName, cardNumber, CVV, expDate from user where userId = " + userId;
 			
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);			
@@ -123,7 +119,6 @@ public class Payment {
 				Integer userID = rs.getInt("userId");
 				String Fname = rs.getString("firstName");
 				String Lname = rs.getString("lastName");
-				String email = rs.getString("email");
 				String cardNumber = rs.getString("cardNumber");
 				Integer CVV = rs.getInt("CVV");
 				String expDate = rs.getString("expDate");
@@ -132,14 +127,13 @@ public class Payment {
 				// Add into the HTML table
 				output += "<tr><td>" + userID + "</td>";
 				output += "<td>" + name + "</td>";
-				output += "<td>" + email + "</td>";
 				output += "<td>" + cardNumber + "</td>";
 				output += "<td>" + CVV + "</td>";
 				output += "<td>" + expDate + "</td>";
 							
 				//Displaying the buttons
-				output += "<td><input name = 'btnUpdate' type = 'button' value = 'Update'></td>";
-				output += "<td><input name = 'btnConfirm' type = 'button' value = 'Confirm'></td>";
+				output += "<td><input name = 'btnUpdate' type = 'button' value = 'Update'>";
+				output += "<input name = 'btnConfirm' type = 'button' value = 'Confirm'></td>";
 							
 			}	
 							
@@ -183,7 +177,7 @@ public class Payment {
 			//Executing the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Updated successfully";
+			output = "User payment details updated successfully";
 		}
 		catch (Exception e)	{
 
@@ -297,7 +291,7 @@ public class Payment {
 			
 			con.close();
 			
-			output = "Inserted successfully";
+			output = "Order payment record inserted successfully";
 		}
 		catch (Exception e){
 			
@@ -334,7 +328,7 @@ public class Payment {
 			preparedStmt.execute();
 			con.close();
 			
-			output = "Deleted successfully";
+			output = "Order payment record deleted successfully";
 		}
 		catch (Exception e)
 		{
@@ -447,7 +441,7 @@ public class Payment {
 				
 			con.close();
 				
-			output = "Inserted successfully";
+			output = "Fund payment record inserted successfully";
 		}
 		catch (Exception e){
 				
@@ -483,7 +477,7 @@ public class Payment {
 			preparedStmt.execute();
 			con.close();
 				
-			output = "Deleted successfully";
+			output = "Fund payment record deleted successfully";
 		}
 		catch (Exception e)
 		{
@@ -588,7 +582,7 @@ public class Payment {
 				
 			con.close();
 				
-			output = "Inserted successfully";
+			output = "Researcher payment record inserted successfully";
 		}
 		catch (Exception e){
 				
@@ -623,7 +617,7 @@ public class Payment {
 			preparedStmt.execute();
 			con.close();
 				
-			output = "Deleted successfully";
+			output = "Researcher payment record deleted successfully";
 		}
 		catch (Exception e)
 		{
