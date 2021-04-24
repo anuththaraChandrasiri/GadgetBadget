@@ -112,8 +112,8 @@ public class Payment {
 			String query = "select userId, firstName, lastName, cardNumber, CVV, expDate from user where userId = " + userId;
 			
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);			
-				
+			ResultSet rs = stmt.executeQuery(query);	
+							
 			if(rs.next()) {
 							
 				Integer userID = rs.getInt("userId");
@@ -123,7 +123,7 @@ public class Payment {
 				Integer CVV = rs.getInt("CVV");
 				String expDate = rs.getString("expDate");
 				String name = Fname + " " + Lname ;
-							
+											
 				// Add into the HTML table
 				output += "<tr><td>" + userID + "</td>";
 				output += "<td>" + name + "</td>";
@@ -155,35 +155,50 @@ public class Payment {
 	public String updateUserPaymentDetailsRecord(String userId, String cardNumber, String CVV, String expDate) {
 			
 		String output = "";
+		
+		//Creating a Payment type object
+		Payment payment = new Payment();
+		
+		//Assigning the output string value of the readUserPaymentDetails(String userId) to the result string variable 
+		String result = payment.readUserPaymentDetails(Integer.parseInt(userId));
+				
+		//Checking whether the entered userId is existing in the database (Update, Delete buttons will be created only if there is a user to display)
+		if(result.contains("Update")) {			
 			
-		try {
-				
-			Connection con = connect();
-				
-			if (con == null) 
-				return "Error while connecting to the database for updating."; 
+			try {
 					
-			// Creating a prepared statement
-			String query = "update user set cardNumber = ?, CVV = ?, expDate = STR_TO_DATE(?,'%Y/%m/%d') WHERE userId = ?";
-			
-			PreparedStatement preparedStmt = con.prepareStatement(query);
-				
-			// Binding values
-			preparedStmt.setString(1, cardNumber);
-			preparedStmt.setInt(2, Integer.parseInt(CVV));
-			preparedStmt.setString(3, expDate);
-			preparedStmt.setInt(4, Integer.parseInt(userId));
+				Connection con = connect();
 					
-			//Executing the statement
-			preparedStmt.execute();
-			con.close();
-			output = "User payment details updated successfully";
-		}
-		catch (Exception e)	{
+				if (con == null) 
+					return "Error while connecting to the database for updating."; 
+						
+				// Creating a prepared statement
+				String query = "update user set cardNumber = ?, CVV = ?, expDate = STR_TO_DATE(?,'%Y/%m/%d') WHERE userId = ?";
+				
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+					
+				// Binding values
+				preparedStmt.setString(1, cardNumber);
+				preparedStmt.setInt(2, Integer.parseInt(CVV));
+				preparedStmt.setString(3, expDate);
+				preparedStmt.setInt(4, Integer.parseInt(userId));
+						
+				//Executing the statement
+				preparedStmt.execute();
+				con.close();
+				output = "User payment details updated successfully";
+			}
+			catch (Exception e)	{
 
-			output = "Error while updating the user payment details record.";
-			System.err.println(e.getMessage());
+				output = "Error while updating the user payment details record.";
+				System.err.println(e.getMessage());
+			}			
+			
 		}
+		
+		//Printing an error message since the entered userId does not exist in the database
+		else
+			output = "Error. Entered User ID does not exist.";
 			
 		return output;
 	}
@@ -559,7 +574,7 @@ public class Payment {
 	public String inserteResearcherPaymentRecord(int researcherId, float amount, String paymentStatus){
 			
 		String output = "";
-			
+				
 		try{
 				
 			Connection con = connect();
@@ -574,7 +589,7 @@ public class Payment {
 				
 			// binding values
 			preparedStmt.setInt(1, researcherId);
-			preparedStmt.setFloat(2, amount);
+			preparedStmt.setFloat(2, (float) (amount*0.9));
 			preparedStmt.setString(3, paymentStatus);
 		
 			// execute the statement
