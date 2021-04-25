@@ -95,9 +95,7 @@ public class Fund {
 					"<th>Project ID</th>" +
 					"<th>Client ID</th>" +
 					"<th>Amount</th>"+
-					"<th>Update</th>"+
-					"<th>Delete</th>"
-					+"</tr>";
+					"</tr>";
 			
 			String query = " select * from fund ";
 			Statement stmt = con.createStatement();
@@ -121,12 +119,7 @@ public class Fund {
 				output += "<td>" + amount + "</td>";
 				
 				// buttons
-				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
-						+ "<td><form method='post' action='items.jsp'>"
-						+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
-						+ "<input name='itemID' type='hidden' value='" + fID
-						+ "'>" 
-						+ "</form></td></tr>";
+				output += "</form></tr>";
 				
 			}
 			

@@ -25,7 +25,7 @@ public class Fund_Services {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertFund(@FormParam("pId") int pId,
-							 @FormParam("reseacherId") int reseacherId,
+							 @FormParam("researcherId") int reseacherId,
 							 @FormParam("clientId") int clientId,
 							 @FormParam("amount") float amount)
 	{

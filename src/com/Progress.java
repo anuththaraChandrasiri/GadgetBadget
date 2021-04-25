@@ -1,7 +1,6 @@
 package com;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +29,7 @@ public class Progress {
 		 return con;
 	 }
 	
-	public String insertProgressDetails(int fundId , int pId , int researcherId , int clientId , InputStream  doc , String status ) {
+	public String insertProgressDetails(int fundId , int pId , int researcherId , int clientId , File  doc , String status ) {
 		
 		String output = "";
 		

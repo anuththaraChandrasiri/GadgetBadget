@@ -1,7 +1,6 @@
 package model;
 
 import java.io.File;
-import java.io.InputStream;
 
 //For REST Service
 import javax.ws.rs.*;
@@ -22,6 +21,7 @@ public class Progress_Services {
 	
 	Progress progressobj = new Progress();
 	
+	
 	//(`progressId`, `fundId`, `pId`, `researcherId`, `clientId`, `document`, `status`)
 	@POST
 	@Path("/insertprogress")
@@ -31,7 +31,7 @@ public class Progress_Services {
 							 @FormParam("pId") int pId,
 							 @FormParam("reseacherId") int rId,
 							 @FormParam("clientId") int cId,
-							 @FormParam("document") InputStream  doc,
+							 @FormParam("document") File  doc,
 							 @FormParam("status") String status)
 	{
 			
@@ -89,6 +89,6 @@ public class Progress_Services {
 	 
 	 return output;
 	}
-
+	
 
 }
