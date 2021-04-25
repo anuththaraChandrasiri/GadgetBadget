@@ -1,6 +1,8 @@
-package com;
+package model;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -54,9 +56,13 @@ public class Progress {
 			 pstmt.setInt(4,(researcherId));
 			 pstmt.setInt(5,(clientId));
 			 			 
+			 //FileReader reader = new FileReader(doc);
+			 
 			 //FileInputStream input = new FileInputStream(doc);
 			 
-			 //pstmt.setBinaryStream(6,doc);
+			 InputStream inputStream = new FileInputStream(doc);
+			 
+			 pstmt.setBinaryStream(6,inputStream);
 			 
 			 pstmt.setString(7,status);
 			

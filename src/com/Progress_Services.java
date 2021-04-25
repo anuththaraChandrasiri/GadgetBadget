@@ -1,4 +1,4 @@
-package model;
+package com;
 
 import java.io.File;
 
@@ -6,10 +6,10 @@ import java.io.File;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import com.Progress;
 //For JSON
 import com.google.gson.*;
 
+import model.Progress;
 
 //For XML
 import org.jsoup.*;

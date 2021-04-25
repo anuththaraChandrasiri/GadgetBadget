@@ -1,13 +1,13 @@
-package model;
+package com;
 
 //For REST Service
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import com.Fund;
 //For JSON
 import com.google.gson.*;
 
+import model.Fund;
 
 //For XML
 import org.jsoup.*;
