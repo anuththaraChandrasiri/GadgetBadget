@@ -169,8 +169,6 @@ public class Progress {
 					"<th>Client ID</th>" +
 					"<th>Document</th>" +
 					"<th>Status</th>"+
-					"<th>Update</th>"+
-					"<th>Delete</th>"+
 					"</tr>";
 			
 			String query = "select * from progress";
@@ -202,12 +200,7 @@ public class Progress {
 				output += "<td>" + status + "</td>";
 				
 				// buttons
-				output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
-						+ "<td><form method='post' action='items.jsp'>"
-						+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
-						+ "<input name='itemID' type='hidden' value='" + prgID
-						+ "'>" 
-						+ "</form></td></tr>";
+				output +="</form></tr>";
 				
 			}
 			
