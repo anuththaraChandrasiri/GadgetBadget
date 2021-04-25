@@ -1,0 +1,24 @@
+CREATE TABLE user (
+	userId int PRIMARY KEY AUTO_INCREMENT ,
+	userName varchar(20) ,
+	email varchar(50) ,
+	firstName varchar(20) ,
+	lastName varchar(20) ,
+	cardNumber bigint ,
+	CVV int ,
+	expDate date ,
+	password varchar(45)
+);
+
+CREATE TABLE client (
+	clientId int PRIMARY KEY ,    
+    CONSTRAINT fk_clientId FOREIGN KEY (clientId) REFERENCES user(userId)
+);
+CREATE TABLE researcher (
+	researcherId int PRIMARY KEY ,    
+    CONSTRAINT fk_researcherId FOREIGN KEY (researcherId) REFERENCES user(userId)
+);
+CREATE TABLE admin (
+	adminId int PRIMARY KEY ,
+    CONSTRAINT fk_adminId FOREIGN KEY (adminId) REFERENCES user(userId)
+);

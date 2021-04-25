@@ -1,0 +1,74 @@
+--
+-- Database: `payment_service`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fund_payment`
+--
+
+DROP TABLE IF EXISTS `fund_payment`;
+CREATE TABLE IF NOT EXISTS `fund_payment` (
+  `fPaymentId` int NOT NULL AUTO_INCREMENT,
+  `pId` int NOT NULL,
+  `fundId` int NOT NULL,
+  `researcherId` int NOT NULL,
+  `amount` float NOT NULL,
+  `paymentStatus` varchar(10) NOT NULL,
+  PRIMARY KEY (`fPaymentId`)
+) ENGINE=MyISAM AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_payment`
+--
+
+DROP TABLE IF EXISTS `order_payment`;
+CREATE TABLE IF NOT EXISTS `order_payment` (
+  `oPaymentId` int NOT NULL AUTO_INCREMENT,
+  `pId` int NOT NULL,
+  `orderId` int NOT NULL,
+  `researcherId` int NOT NULL,
+  `amount` float NOT NULL,
+  `paymentStatus` varchar(10) NOT NULL,
+  PRIMARY KEY (`oPaymentId`)
+) ENGINE=MyISAM AUTO_INCREMENT=10004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `researcher_payment`
+--
+
+DROP TABLE IF EXISTS `researcher_payment`;
+CREATE TABLE IF NOT EXISTS `researcher_payment` (
+  `rPaymentId` int NOT NULL AUTO_INCREMENT,
+  `researcherId` int NOT NULL,
+  `amount` float NOT NULL,
+  `paymentStatus` varchar(10) NOT NULL,
+  PRIMARY KEY (`rPaymentId`)
+) ENGINE=MyISAM AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `userId` int NOT NULL AUTO_INCREMENT,
+  `userName` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(10) NOT NULL,
+  `firstName` varchar(20) NOT NULL,
+  `lastName` varchar(20) NOT NULL,
+  `cardNumber` bigint NOT NULL,
+  `CVV` int NOT NULL,
+  `expDate` date NOT NULL,
+  PRIMARY KEY (`userId`)
+) ENGINE=MyISAM AUTO_INCREMENT=1006 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------

@@ -1,0 +1,44 @@
+CREATE TABLE `gadget_badget`.`project` 
+( `pid` INT NOT NULL ,
+  `researcherid` INT NOT NULL ,
+  `topic` VARCHAR(50) NOT NULL ,
+  `status` VARCHAR(10) NOT NULL , 
+   PRIMARY KEY (`pid`)
+) ENGINE = InnoDB;
+
+
+CREATE TABLE `gadget_badget`.`unfinished` 
+( `pid` INT NOT NULL ,
+  `researcherid` INT NOT NULL ,
+  `clientid` INT NULL ,
+  `requiredAmount` FLOAT NOT NULL , 
+   PRIMARY KEY (`pid`, `researcherid`)
+) ENGINE = InnoDB;
+
+ALTER TABLE `unfinished` 
+ADD CONSTRAINT `fk_unfinished1` FOREIGN KEY (`pid`) 
+REFERENCES `gadget_badget`.`project`(`pid`) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `unfinished` 
+ADD CONSTRAINT `fk_unfinished2` FOREIGN KEY (`researcherId`) 
+REFERENCES `gadget_badget`.`project`(`researcherId`) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE `gadget_badget`.`finished`
+( `pid` INT NOT NULL , 
+  `researcherid` INT NOT NULL ,
+  `cartid` INT NULL , `clientid` INT NULL ,
+  `price` FLOAT NOT NULL ,
+   PRIMARY KEY (`pid`, `researcherid`)
+) ENGINE = InnoDB;
+
+ALTER TABLE `finished` 
+ADD CONSTRAINT `fk_finished1` FOREIGN KEY (`pid`) 
+REFERENCES `gadget_badget`.`project`(`pid`) 
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `finished` 
+ADD CONSTRAINT `fk_finished2` FOREIGN KEY (`researcherId`) 
+REFERENCES `gadget_badget`.`project`(`researcherId`) 
+ON DELETE CASCADE ON UPDATE CASCADE;

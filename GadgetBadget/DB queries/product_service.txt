@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE IF NOT EXISTS `order` (
+  `orderId` int NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL,
+  `researcherId` int NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `totAmount` float NOT NULL,
+  `status` varchar(10) NOT NULL,
+  PRIMARY KEY (`orderId`,`pid`,`researcherId`),
+  KEY `FK_pId_researcherId` (`pid`,`researcherId`)
+)

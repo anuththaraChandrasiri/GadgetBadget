@@ -1,0 +1,34 @@
+--create table fund--
+
+DROP TABLE IF EXISTS `fund`;
+CREATE TABLE IF NOT EXISTS `fund` (
+  `fundId` int NOT NULL AUTO_INCREMENT,
+  `pId` int NOT NULL,
+  `researcherId` int NOT NULL,
+  `clientId` int NOT NULL,
+  `amount` float NOT NULL,
+  PRIMARY KEY (`fundId`,`pId`,`researcherId`,`clientId`),
+  constraint fk_project FOREIGN KEY (pId) REFERENCES project(pId)
+  constraint fk_research FOREIGN KEY (reseacherId) REFERENCES reseacher(reseacherId)
+  constraint fk_client FOREIGN KEY (clientId) REFERENCES client(clientId)  
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+--create table progress details--
+
+DROP TABLE IF EXISTS `progress`;
+CREATE TABLE IF NOT EXISTS `progress` (
+  `progressId` int NOT NULL AUTO_INCREMENT,
+  `fundId` int NOT NULL,
+  `pId` int NOT NULL,
+  `researcherId` int NOT NULL ,
+  `clientId` int NOT NULL,
+  `document` blob NOT NULL,
+  `status` varchar(10) NOT NULL,
+  PRIMARY KEY (`progressId`,`fundId`,`pId`,`researcherId`,`clientId`),
+  constraint fk_project FOREIGN KEY (pId) REFERENCES project(pId)
+  constraint fk_research FOREIGN KEY (reseacherId) REFERENCES reseacher(reseacherId)
+  constraint fk_client FOREIGN KEY (clientId) REFERENCES fund(clientId) 
+  constraint fk_fund FOREIGN KEY (fundId) REFERENCES fund(fundId)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
