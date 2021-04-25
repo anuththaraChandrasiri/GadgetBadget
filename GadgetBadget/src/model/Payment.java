@@ -353,7 +353,7 @@ public class Payment {
 		return output;
 	}
 	
-	//Fund payment details methods----------------------------------------------------------------------------------------------------------
+	//Fund payment details methods------------------------------------------------------------------------------------------------------------
 	
 	//Method to read Fund payment details
 	public String readFundPaymentDetails() {
