@@ -13,6 +13,7 @@
 	<url-pattern>/PaymentService/*</url-pattern>
 	<url-pattern>/ItemService/*</url-pattern>
 	<url-pattern>/ProductService/*</url-pattern>
+	<url-pattern>/UserService/*</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>
